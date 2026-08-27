@@ -1,0 +1,97 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { localeFromPath, type Locale } from "../lib/i18n";
+
+interface Props {
+  posts: CollectionEntry<"journal">[];
+  locale?: Locale;
+}
+
+const { posts } = Astro.props;
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const dateLocale = locale === "sl" ? "sl-SI" : "en-GB";
+---
+
+<ul class="archive">
+  {
+    posts.map((post) => {
+      const date = post.data.pubDate.toLocaleDateString(dateLocale, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      return (
+        <li>
+          <a href={`/journal/${post.id}`}>
+            <time datetime={post.data.pubDate.toISOString()}>{date}</time>
+            <span class="title">{post.data.title}</span>
+            <span class="author">{post.data.author}</span>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .archive {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr) 11rem;
+    gap: 1.25rem;
+    align-items: baseline;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--color-line);
+    text-decoration: none;
+    color: var(--color-ink);
+  }
+
+  .archive li:first-child a {
+    border-top: 1px solid var(--color-line);
+  }
+
+  time,
+  .author {
+    font-family: var(--font-display);
+    font-size: var(--step-small);
+    font-weight: var(--weight-display);
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: var(--weight-display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+  }
+
+  .author {
+    text-align: right;
+  }
+
+  a:hover,
+  a:hover time,
+  a:hover .author {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 720px) {
+    a {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+      padding: 0.85rem 0;
+    }
+
+    .author {
+      text-align: left;
+    }
+  }
+</style>

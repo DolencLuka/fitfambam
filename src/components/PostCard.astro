@@ -17,14 +17,16 @@ const date = post.data.pubDate.toLocaleDateString("en-GB", {
   year: "numeric",
 });
 const kicker = post.data.archive ? t.archiveKicker : post.data.tags[0];
-const hasHero = Boolean(post.data.hero);
+const hero = post.data.hero;
+const hasHero = Boolean(hero);
+const isPortrait = Boolean(hero && hero.height > hero.width);
 ---
 
 <article class:list={["card", hasHero ? "card-photo" : "card-type"]}>
   <a href={`/journal/${post.id}`}>
     {
       hasHero && post.data.hero ? (
-        <div class="media">
+        <div class:list={["media", isPortrait && "is-portrait"]}>
           <Image
             src={post.data.hero}
             alt={post.data.heroAlt ?? ""}
@@ -68,7 +70,7 @@ const hasHero = Boolean(post.data.hero);
   .type {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     background: var(--color-ink);
   }
 
@@ -76,7 +78,12 @@ const hasHero = Boolean(post.data.hero);
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.8s var(--ease);
+  }
+
+  .media.is-portrait :global(img) {
+    object-position: top;
   }
 
   .veil,

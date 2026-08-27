@@ -81,6 +81,7 @@ const copyMap = {
         "Looking out over the water from a beach",
       ] as const,
     },
+    photographs: "Photographs",
     archiveKicker: "From the archive",
     archiveNote: "From the 2015 FitFamBam journal, written by Mariah.",
     contact: {
@@ -126,6 +127,7 @@ const copyMap = {
         "Pogled na vodo s plaže",
       ] as const,
     },
+    photographs: "Fotografije",
     archiveKicker: "Iz arhiva",
     archiveNote: "Iz FitFamBam dnevnika 2015, napisala Mariah.",
     contact: {

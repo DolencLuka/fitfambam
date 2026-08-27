@@ -2,13 +2,16 @@
 import { getCollection } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import PostCard from "../../../components/PostCard.astro";
+import ArchiveList from "../../../components/ArchiveList.astro";
 import CtaBand from "../../../components/CtaBand.astro";
 import { copy } from "../../../lib/i18n";
+import { splitJournal } from "../../../lib/journal";
 
 const t = copy("sl");
 const posts = (await getCollection("journal")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const { photographs, archive } = splitJournal(posts);
 ---
 
 <Layout
@@ -24,9 +27,23 @@ const posts = (await getCollection("journal")).sort(
     </p>
   </header>
 
-  <div class="wrap-wide list">
-    {posts.map((post) => <PostCard post={post} locale="sl" />)}
-  </div>
+  <section class="photographs" aria-labelledby="photographs-heading">
+    <div class="wrap head">
+      <h2 id="photographs-heading" class="kicker">{t.photographs}</h2>
+    </div>
+    <div class="wrap-wide cards">
+      {photographs.map((post) => <PostCard post={post} locale="sl" />)}
+    </div>
+  </section>
+
+  <section class="writing" aria-labelledby="archive-heading">
+    <div class="wrap head">
+      <h2 id="archive-heading" class="kicker">{t.archiveKicker}</h2>
+    </div>
+    <div class="wrap">
+      <ArchiveList posts={archive} locale="sl" />
+    </div>
+  </section>
 
   <CtaBand locale="sl" />
 </Layout>
@@ -42,15 +59,22 @@ const posts = (await getCollection("journal")).sort(
     margin: 0.3em 0 0.5em;
   }
 
-  .list {
+  .head {
+    margin-bottom: var(--space-l);
+  }
+
+  .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.4rem;
-    padding-bottom: var(--space-3xl);
+  }
+
+  .writing {
+    padding: var(--space-3xl) 0;
   }
 
   @media (max-width: 860px) {
-    .list {
+    .cards {
       grid-template-columns: 1fr;
     }
   }
