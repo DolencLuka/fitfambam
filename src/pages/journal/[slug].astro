@@ -3,6 +3,8 @@ import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import CtaBand from "../../components/CtaBand.astro";
+import Figure from "../../components/journal/Figure.astro";
+import Pair from "../../components/journal/Pair.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("journal");
@@ -47,12 +49,11 @@ const kicker = post.data.archive
         quality={72}
         format="webp"
       />
+      {post.data.heroAlt && <figcaption>{post.data.heroAlt}</figcaption>}
     </figure>
 
-    <div class="wrap body">
-      <div class="prose">
-        <Content />
-      </div>
+    <div class="prose body">
+      <Content components={{ Figure, Pair }} />
     </div>
   </article>
   <CtaBand />
@@ -94,7 +95,27 @@ const kicker = post.data.archive
     object-fit: cover;
   }
 
-  .body {
+  .hero figcaption {
+    margin: var(--space-xs) var(--gutter) 0;
+    font-size: var(--step-small);
+    color: var(--color-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /*
+    Full-bleed / breakout grid (Josh Comeau pattern).
+    Middle track = prose measure; side tracks absorb leftover space.
+    Figure/Pair with layout=breakout|full span 1 / -1.
+  */
+  .prose {
+    display: grid;
+    grid-template-columns: 1fr min(var(--measure), calc(100% - var(--gutter) * 2)) 1fr;
+    max-width: none;
     padding-bottom: var(--space-3xl);
+    font-size: 1.125rem;
+  }
+
+  .prose :global(> *) {
+    grid-column: 2;
   }
 </style>

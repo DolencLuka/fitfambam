@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  layout?: "column" | "breakout" | "full";
+}
+
+const { src, alt, caption, layout = "column" } = Astro.props;
+
+const widths =
+  layout === "full"
+    ? [800, 1200, 1600]
+    : layout === "breakout"
+      ? [640, 960, 1200, 1400]
+      : [400, 640, 800];
+
+const sizes =
+  layout === "full"
+    ? "100vw"
+    : layout === "breakout"
+      ? "(min-width: 900px) min(72rem, 100vw - 2 * var(--gutter, 1.25rem)), 100vw"
+      : "(min-width: 640px) min(38rem, 100vw), 100vw";
+---
+
+<figure class:list={["journal-figure", `layout-${layout}`]}>
+  <Image
+    src={src}
+    alt={alt}
+    widths={widths}
+    sizes={sizes}
+    quality={72}
+    format="webp"
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .journal-figure {
+    margin-block: var(--space-xl);
+    margin-inline: 0;
+  }
+
+  .journal-figure :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    margin-top: var(--space-xs);
+    font-size: var(--step-small);
+    color: var(--color-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* column: stays in the prose measure via .prose > * */
+
+  .layout-breakout {
+    grid-column: 1 / -1;
+    width: min(var(--wrap), calc(100% - var(--gutter) * 2));
+    justify-self: center;
+  }
+
+  .layout-full {
+    grid-column: 1 / -1;
+    padding-inline: var(--space-m);
+  }
+</style>

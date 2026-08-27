@@ -234,6 +234,18 @@ p + p {
   color: var(--color-accent-dark);
 }
 
+.prose figure {
+  margin-block: var(--space-xl);
+  margin-inline: 0;
+}
+
+.prose figcaption {
+  margin-top: var(--space-xs);
+  font-size: var(--step-small);
+  color: var(--color-muted);
+  line-height: var(--leading-snug);
+}
+
 .ph-cap {
   margin: 0.6rem 0 0;
   font-size: var(--step-small);

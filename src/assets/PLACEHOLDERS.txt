@@ -1,13 +1,28 @@
 Public pages use real photos from src/assets/from-wp/:
   couple.webp — Luka and Mariah (Home, About, Together pillar, Luka journal hero)
-  countryside-meadow.webp — meadow (Home hero, About feature, some archive heroes)
-  kitchen-board.webp — food board (About, Eat pillar, rice-cake hero)
+  countryside-meadow.webp — meadow (Home hero, About feature; NOT the dirt journal hero)
+  kitchen-board.webp — food board (About, Eat pillar only; NOT the rice-cake hero)
   beach-looking-out.webp / beach-pier.webp — beaches (Home, pillars, some archive heroes)
   fitfambam-wordmark.webp — historical image on About only, not the header logo
 
-Archive-only (do not put on public pages):
+Journal inline photos ARE allowed on public journal pages, including the 2015
+toddler / kids shots. Luka approved restoring those on the public dirt post.
+
+Dirt post (i-let-my-baby-eat-dirt):
+  hero IMG_0024.jpg
+  inline Pair IMG_0022 / IMG_0023 / IMG_0024 (toddler wheelbarrow / dirt shots)
+
+Rice-cake post (rice-cake-sandwiches):
+  hero IMG_0033.jpg (finished open chicken rice cake)
+  inline column Figures IMG_0034 / IMG_0035 / IMG_0037 (mustard, cottage cheese, slicing chicken)
+  kitchen-board.webp is About/Eat only, not this hero
+
+Motherhood, pregnancy, and Ljubljana posts had no inline images in WordPress;
+do not invent photos for them.
+
+Archive assets also available for journal use:
   piran-square.webp, forest-walk.webp, toddler-garden.webp,
-  toddler-pebble-beach.webp, and any child/baby photos (IMG_0022 etc.)
+  toddler-pebble-beach.webp
 
 Stock still on Contact (contact.webp) and OG (public/og.webp).
 Unused stock remains under src/assets/ (hero, why, family, about-*, pillars, journal).

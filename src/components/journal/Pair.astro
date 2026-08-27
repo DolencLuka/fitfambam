@@ -1,0 +1,89 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Item {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  /** Two or three photos in a row (stacks on small screens). Extra items are ignored. */
+  items: Item[];
+  layout?: "column" | "breakout" | "full";
+}
+
+const { items, layout = "breakout" } = Astro.props;
+const shown = items.slice(0, 3);
+const count = shown.length;
+
+const widths = [320, 480, 640, 800];
+const sizes =
+  count >= 3
+    ? "(min-width: 700px) 28vw, 100vw"
+    : "(min-width: 700px) 40vw, 100vw";
+---
+
+<div class:list={["pair", `layout-${layout}`]} role="group">
+  {
+    shown.map((item) => (
+      <figure>
+        <Image
+          src={item.src}
+          alt={item.alt}
+          widths={widths}
+          sizes={sizes}
+          quality={72}
+          format="webp"
+        />
+        {item.caption && <figcaption>{item.caption}</figcaption>}
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .pair {
+    display: grid;
+    gap: var(--space-s);
+    grid-template-columns: 1fr;
+    margin-block: var(--space-xl);
+    margin-inline: 0;
+  }
+
+  @media (min-width: 640px) {
+    .pair {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    margin-top: var(--space-xs);
+    font-size: var(--step-small);
+    color: var(--color-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* column: stays in the prose measure via .prose > * */
+
+  .layout-breakout {
+    grid-column: 1 / -1;
+    width: min(var(--wrap), calc(100% - var(--gutter) * 2));
+    justify-self: center;
+  }
+
+  .layout-full {
+    grid-column: 1 / -1;
+    padding-inline: var(--space-m);
+  }
+</style>
