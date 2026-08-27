@@ -1,0 +1,93 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  accent?: string;
+  rest?: string;
+  lede?: string;
+  tone?: "paper" | "soft" | "forest";
+  split?: boolean;
+}
+
+const {
+  id,
+  eyebrow,
+  title,
+  accent,
+  rest,
+  lede,
+  tone = "paper",
+  split = false,
+} = Astro.props;
+---
+
+<section class:list={["section", tone]} id={id}>
+  <div class:list={["wrap", { split }]}>
+    {
+      (eyebrow || title || lede) && (
+        <header class="head">
+          {eyebrow && <p class="kicker">{eyebrow}</p>}
+          {title && (
+            <h2>
+              {title}
+              {accent && <span class="accent"> {accent}</span>}
+              {rest && <> {rest}</>}
+            </h2>
+          )}
+          {lede && <p class="lede">{lede}</p>}
+        </header>
+      )
+    }
+    <div class="body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: var(--space-3xl) 0;
+  }
+
+  .soft {
+    background: var(--color-paper-raised);
+  }
+
+  .forest {
+    background: var(--color-forest);
+    color: var(--color-ink-inverse);
+  }
+
+  .forest .lede,
+  .forest .kicker {
+    color: rgb(246 245 242 / 0.78);
+  }
+
+  .head {
+    margin-bottom: var(--space-xl);
+    max-width: 42rem;
+  }
+
+  h2 {
+    font-size: var(--step-1);
+    margin: 0.35em 0 0.5em;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  .split .head {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 800px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

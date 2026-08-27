@@ -1,0 +1,145 @@
+---
+import Wordmark from "./Wordmark.astro";
+import { site } from "../lib/site";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("journal"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap grid">
+    <div class="brand">
+      <Wordmark inverse />
+      <p>
+        A family journal from {site.place}. Mariah’s 2015 writing, and new notes
+        from Luka. Not a gym. Not a membership.
+      </p>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/journal">Journal</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/sl">Slovenščina <span>(coming)</span></a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Recent notes</h2>
+      <ul>
+        {
+          posts.map((post) => (
+            <li>
+              <a href={`/journal/${post.id}`}>{post.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <p>© {year} {site.name}. {site.owner}.</p>
+    <p>No tracking pixels. No invented reviews.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-forest);
+    color: var(--color-ink-inverse);
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.6fr 0.8fr 1.1fr;
+    gap: var(--space-2xl);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    font-weight: 400;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    margin: 0 0 var(--space-m);
+    color: rgb(246 245 242 / 0.55);
+  }
+
+  p,
+  li,
+  a {
+    color: rgb(246 245 242 / 0.82);
+    font-size: 0.95rem;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-ink-inverse);
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .brand p {
+    margin: var(--space-m) 0;
+    max-width: 22rem;
+  }
+
+  .brand a {
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--color-ink-inverse);
+  }
+
+  span {
+    color: rgb(246 245 242 / 0.45);
+    font-size: 0.8em;
+  }
+
+  .legal {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-m);
+    flex-wrap: wrap;
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-l);
+    border-top: 1px solid rgb(246 245 242 / 0.12);
+  }
+
+  .legal p {
+    margin: 0;
+    font-size: var(--step-small);
+    color: rgb(246 245 242 / 0.5);
+  }
+
+  @media (max-width: 800px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

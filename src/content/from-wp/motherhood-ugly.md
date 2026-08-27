@@ -1,0 +1,30 @@
+# Motherhood Is Making Me Ugly
+
+- status: publish
+- date: 2015-07-07
+- slug: motherhood-is-making-me-ugly
+- source: wordpress sql, voice is Mariah first-person
+
+Motherhood is the most beautiful experience that can make you feel the least beautiful. What does this mean? I was on FaceTime with my husband and he commented, "Babe, you look so good. You look beautiful." I am married to a wonderful man who tells me this everyday. Normally my response is something like, "Thank you, my love! I think the same about you." Today however, was different. Today I didn't feel beautiful. I felt downright ugly. I said so too. "I don't feel like it. I feel ugly." It wasn't a way for me to get more compliments or attention from him, it was sincere. It got me thinking too. Why? Why do I feel so unattractive? Because now I am a mom.
+
+Becoming a mother changes everything about life. The changes are mostly for the better, but there are some drawbacks as well.
+
+1. Most days you don't do your makeup
+
+2. Most days you don't do your hair
+
+3. Most days you wear yoga pants and t-shirts
+
+4. Most days you don't have time to yourself
+
+5. Most nights you don't sleep
+
+All these things lead to feeling unattractive. Whether you are or are not attractive by society's standards is irrelevant. You can be drop dead gorgeous and feel like an ogre because you didn't sleep more than 3 hours that night and you haven't washed your face that day or had time to shower in the past week. This isn't just about your outward appearance, but typically what's on the inside translates outward. How you look on the outside reflects what is going on on the inside.
+
+So what did I do to solve this? As soon as Olivia went to bed I did my makeup. Simple, but nice. Then I did my hair. Okay, feeling a little better. The frizz is tamed. Then I take a photo of myself with the intention of posting it. Hmm, better filter it to death. Even then, forget social media. Just one of those days.
+
+The thing is, motherhood takes away all of our "me time" and covers us in poop, spit up, and food. No wonder we feel ugly! Plus, it isn't just one day that this happens. It's day after day after day for years. For me it's been one year, but I feel like if I don't get a handle on this I'm doomed for the rest of my life. I refuse to be a frumpy middle aged woman beaten down by years of self neglect. We end up sacrificing all of the attention we used to spend on ourselves and focus it on our little ones. It's noble, but not worth it. I firmly believe that if we stop feeling beautiful, we stop trying to even look beautiful and then we stop trying to be attractive altogether. It isn't about looking good for everyone out there, it's about looking good for everyone inside your home. The most important person being you, second is your spouse, and then the children.
+
+First, you have to want to look good for yourself. For your own happiness. You need to do it for YOU. It's not okay to feel unattractive. Secondly, for your husband. I plan to look good for Luka until I die at a very advanced age. When we date each other we do everything humanly possible to look our best for that other person. To be our sexiest, our hottest, our most attractive. That should never stop! We should always want to look our best for him; to continuously put in effort to being his sexy lady. This makes you feel better about yourself, it makes you feel better in your relationship, which improves your marriage, which eventually trickles down to your kids. Your kids see everything and they see it from a very young age. If you aren't happy with yourself you won't be your best for them. Plus, if you are unhappy with your image and vocalize that your kids  will  pick up on it. Putting yourself down teaches them to do the same. Feeling good about how you look and saying so teaches them to appreciate their image and their body and caring for themselves.
+
+So does it mean that you need to wear makeup to be a better parent? No, but do whatever it is that makes you feel beautiful inside and out. Some days I look at myself with a totally naked face and think, I look really pretty. Most days to look and feel my best I like wear makeup and style my hair. What do you need to do to feel beautiful?

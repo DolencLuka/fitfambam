@@ -1,0 +1,212 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/Section.astro";
+import CtaBand from "../components/CtaBand.astro";
+import sloveniaImg from "../assets/from-wp/countryside-meadow.webp";
+import kitchenImg from "../assets/from-wp/kitchen-board.webp";
+import familyImg from "../assets/from-wp/couple.webp";
+import wordmarkImg from "../assets/from-wp/fitfambam-wordmark.webp";
+---
+
+<Layout
+  title="About"
+  description="FitFamBam is Luka and Mariah Dolenc’s family journal in Slovenia. What it is, and what it is not."
+>
+  <header class="page-hero wrap">
+    <p class="kicker">About</p>
+    <h1>A family in <span class="accent">Slovenia.</span> A page with a name.</h1>
+    <p class="lede">
+      We are Luka and Mariah Dolenc. We live in Slovenia with our four children. FitFamBam is ours together. It is personal. It is not a club.
+    </p>
+  </header>
+
+  <div class="feature">
+    <Image src={sloveniaImg} alt="A sunny meadow and woods in the countryside" widths={[800, 1200, 1600]} sizes="100vw" quality={72} format="webp" />
+    <p class="cap wrap">From the old site archive. A meadow near home, not a stock lake.</p>
+  </div>
+
+  <Section eyebrow="The short version" title="What FitFamBam" accent="is.">
+    <div class="prose">
+      <p>
+        A family journal and a calling card. Movement, food, rest, and the people we live with. We want to stay capable for a long time, in a house that is already full.
+      </p>
+      <p>
+        We married in 2011. Mariah left California the next morning and has been here since. In 2015 we had two daughters, Olivia and Leia. We now have four children.
+      </p>
+      <p>
+        The name is ours. The later domain is FitFamBam.com. Until then, this static site is the whole thing.
+      </p>
+    </div>
+  </Section>
+
+  <div class="split wrap">
+    <figure>
+      <Image src={kitchenImg} alt="Tomato, avocado, and cheese on seeded bread" widths={[640, 1000]} sizes="(min-width: 800px) 45vw, 90vw" quality={70} format="webp" />
+    </figure>
+    <div>
+      <p class="kicker">What it is not</p>
+      <h2>No memberships. <span class="accent">No miracle week.</span></h2>
+      <ul class="not-list">
+        <li>Not a gym with classes and a desk at the door.</li>
+        <li>Not a shop, and not a catalogue of products.</li>
+        <li>Not medical advice. We are parents writing about a household, not clinicians.</li>
+        <li>Not a transformation brand. Bodies change slowly, in private.</li>
+        <li>Not a staff of trainers. You will not find invented names here.</li>
+      </ul>
+    </div>
+  </div>
+
+  <Section tone="soft" eyebrow="How we live" title="A full house." accent="A small country.">
+    <div class="two">
+      <div class="prose">
+        <p>
+          Slovenia is the right size for this. You can walk into trees from a lot of front doors. The food is close. Sunday still means something.
+        </p>
+        <p>
+          Mariah sees space, type, and colour before Luka does. She liked a polished gym look we once tried, and could not bend it. FitFamBam is built so she can restyle it from one file. If the accent should shift, we change a token. The pages follow.
+        </p>
+        <p>
+          Photographs on these pages are ours from the old archive: a meadow, a kitchen board, the two of us, a couple of beaches. Photos of the children live in the archive folder and are not used here.
+        </p>
+      </div>
+      <figure>
+        <Image src={familyImg} alt="Luka and Mariah, a close portrait" widths={[640, 1000]} sizes="(min-width: 800px) 40vw, 90vw" quality={70} format="webp" />
+      </figure>
+    </div>
+  </Section>
+
+  <Section eyebrow="The journal" title="Mariah wrote first." accent="Luka writes when he can.">
+    <div class="archive-split">
+      <div class="prose">
+        <p>
+          In 2015 Mariah kept a FitFamBam journal: garden dirt, rice-cake sandwiches, pregnancy, Ljubljana. Those posts are back, marked as archive, with her name on them. Luka did not write them.
+        </p>
+        <p>
+          Luka’s first new note is only this: the site is ours again, and he will add to it when there is a sentence worth keeping.
+        </p>
+        <p>
+          The old photo wordmark below is how the name looked then. Thin white caps on bokeh. The mark in the header is the one we use now.
+        </p>
+        <a class="btn" href="/journal">Read the journal</a>
+      </div>
+      <figure class="wordmark-hist">
+        <Image src={wordmarkImg} alt="The 2015 FitFamBam wordmark, type over a bokeh photograph" widths={[640, 1000]} sizes="(min-width: 800px) 40vw, 90vw" quality={70} format="webp" />
+        <figcaption>Historical mark from the 2015 site. Not the live logo.</figcaption>
+      </figure>
+    </div>
+  </Section>
+
+  <CtaBand title="If this feels like your kind of" accent="quiet," />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+
+  h1 {
+    font-size: var(--step-1);
+    max-width: 18ch;
+    margin: 0.3em 0 0.5em;
+  }
+
+  .feature {
+    padding-bottom: var(--space-2xl);
+  }
+
+  .feature :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+  }
+
+  .cap {
+    margin: 0.75rem auto 0;
+    color: var(--color-muted);
+    font-size: var(--step-small);
+  }
+
+  .split,
+  .two,
+  .archive-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+    padding-bottom: var(--space-3xl);
+  }
+
+  .archive-split {
+    padding-bottom: 0;
+  }
+
+  figure {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  figure :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .wordmark-hist {
+    background: var(--color-ink);
+  }
+
+  .wordmark-hist :global(img) {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .wordmark-hist figcaption {
+    padding: 0.75rem 0.2rem 0;
+    color: var(--color-muted);
+    font-size: var(--step-small);
+    background: var(--color-paper);
+  }
+
+  h2 {
+    font-size: var(--step-1);
+    margin: 0.3em 0 0.8em;
+  }
+
+  .not-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .not-list li {
+    padding-left: 1.2rem;
+    position: relative;
+    color: var(--color-ink);
+  }
+
+  .not-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  @media (max-width: 800px) {
+    .split,
+    .two,
+    .archive-split {
+      grid-template-columns: 1fr;
+    }
+
+    .feature :global(img),
+    figure :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>

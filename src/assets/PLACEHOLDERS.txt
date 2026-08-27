@@ -1,0 +1,13 @@
+Public pages use real photos from src/assets/from-wp/:
+  couple.webp — Luka and Mariah (Home, About, Together pillar, Luka journal hero)
+  countryside-meadow.webp — meadow (Home hero, About feature, some archive heroes)
+  kitchen-board.webp — food board (About, Eat pillar, rice-cake hero)
+  beach-looking-out.webp / beach-pier.webp — beaches (Home, pillars, some archive heroes)
+  fitfambam-wordmark.webp — historical image on About only, not the header logo
+
+Archive-only (do not put on public pages):
+  piran-square.webp, forest-walk.webp, toddler-garden.webp,
+  toddler-pebble-beach.webp, and any child/baby photos (IMG_0022 etc.)
+
+Stock still on Contact (contact.webp) and OG (public/og.webp).
+Unused stock remains under src/assets/ (hero, why, family, about-*, pillars, journal).

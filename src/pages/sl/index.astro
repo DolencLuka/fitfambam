@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Slovenščina"
+  description="Slovenska različica FitFamBam prihaja. English is ready today."
+>
+  <section class="wrap coming">
+    <p class="kicker">Jezik · Language</p>
+    <h1>Slovenščina <span class="accent">prihaja.</span></h1>
+    <p class="lede">
+      FitFamBam bo kmalu tudi v slovenščini. Danes je stran v angleščini. Hvala za potrpežljivost.
+    </p>
+    <p class="en">
+      The Slovenian edition is on the way. English is live. Luka and Mariah write from home in Slovenia, with four children in the house.
+    </p>
+    <a class="btn" href="/">Back to English</a>
+  </section>
+</Layout>
+
+<style>
+  .coming {
+    padding: var(--space-4xl) 0;
+    max-width: 40rem;
+  }
+
+  h1 {
+    font-size: var(--step-1);
+    margin: 0.3em 0 0.5em;
+  }
+
+  .en {
+    color: var(--color-muted);
+    margin: 1.25em 0 var(--space-xl);
+  }
+</style>

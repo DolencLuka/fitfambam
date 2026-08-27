@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+import CtaBand from "../../components/CtaBand.astro";
+
+const posts = (await getCollection("journal")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout
+  title="Journal"
+  description="A family journal from Slovenia. Mariah’s 2015 FitFamBam archive, and new notes from Luka when there is something worth keeping."
+>
+  <header class="page-hero wrap">
+    <p class="kicker">Journal</p>
+    <h1>A family <span class="accent">journal.</span></h1>
+    <p class="lede">
+      English. Mariah wrote here in 2015. Those pieces stay, attributed to her. Luka writes when he has something worth keeping. Not a programme. Not a scrape of other people’s advice.
+    </p>
+  </header>
+
+  <div class="wrap-wide list">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+
+  <CtaBand />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+
+  h1 {
+    font-size: var(--step-1);
+    max-width: 14ch;
+    margin: 0.3em 0 0.5em;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    padding-bottom: var(--space-3xl);
+  }
+
+  @media (max-width: 860px) {
+    .list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

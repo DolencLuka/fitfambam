@@ -1,0 +1,183 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import PhotoGrid from "../components/PhotoGrid.astro";
+import PostCard from "../components/PostCard.astro";
+import CtaBand from "../components/CtaBand.astro";
+import heroImg from "../assets/from-wp/countryside-meadow.webp";
+import whyImg from "../assets/from-wp/couple.webp";
+
+const posts = (await getCollection("journal"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Layout
+  title="FitFamBam"
+  description="A family journal from Slovenia. Luka and Mariah Dolenc. Movement, food, rest, and showing up with the people you love."
+  cover
+>
+  <Hero
+    tagline="A family journal from Slovenia"
+    image={heroImg}
+    imageAlt="A meadow and woods in the Slovenian countryside"
+  />
+
+  <section class="about" id="about">
+    <div class="wrap split">
+      <div class="copy">
+        <p class="kicker">About</p>
+        <h2>A family page. <span class="accent">Not a gym.</span></h2>
+        <p class="lede">
+          Luka and Mariah, four children, Slovenia. She moved from California the day after they married in 2011. The journal is theirs: Mariah’s 2015 writing, and new notes from Luka.
+        </p>
+        <p>
+          FitFamBam is Luka and Mariah’s space for the kind of life that survives a full house. There are no memberships, no packages, no invented before-and-afters.
+        </p>
+        <p>
+          Mariah wrote here first, in 2015. Those posts stay, with her name on them. Luka is putting the site back up so there is a place for both of them — a page that looks like a photograph and behaves like a letter.
+        </p>
+        <p>
+          If you are looking for a franchise, a challenge, or someone shouting at you from a stage, this will feel quiet. That is on purpose.
+        </p>
+        <p class="rhythm">Move · Eat · Rest · Together</p>
+        <a class="btn" href="/about">What this is, and is not</a>
+      </div>
+      <figure>
+        <Image src={whyImg} alt="Luka and Mariah" widths={[640, 960, 1400]} sizes="(min-width: 800px) 45vw, 90vw" quality={72} format="webp" />
+      </figure>
+    </div>
+  </section>
+
+  <Section tone="soft" eyebrow="From Luka" title="A short note.">
+    <blockquote class="note">
+      <p>
+        I am Luka Dolenc. I live in Slovenia with Mariah and our four children. I care about being useful to them more than I care about looking trained.
+      </p>
+      <p>
+        Mariah wrote the first FitFamBam journal in 2015. I will not pretend those sentences are mine. I will write here when I have something worth keeping. I will not invent a crowd to clap.
+      </p>
+      <footer>— Luka</footer>
+    </blockquote>
+  </Section>
+
+  <section class="photos" id="photos">
+    <div class="wrap head">
+      <p class="kicker">Photographs</p>
+      <h2>From the archive.</h2>
+    </div>
+    <PhotoGrid />
+  </section>
+
+  <Section eyebrow="Journal" title="Latest writing.">
+    <div class="posts">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+    <p class="more"><a href="/journal">All notes</a></p>
+  </Section>
+
+  <CtaBand />
+</Layout>
+
+<style>
+  .about {
+    padding: var(--space-4xl) 0;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .copy p + p {
+    margin-top: 1em;
+  }
+
+  .copy h2 {
+    font-size: var(--step-1);
+    margin: 0.4em 0 0.6em;
+  }
+
+  .rhythm {
+    margin: 1.5em 0 !important;
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+  }
+
+  .note {
+    margin: 0;
+    max-width: 40rem;
+    font-size: var(--step-3);
+    line-height: 1.6;
+  }
+
+  .note footer {
+    margin-top: var(--space-l);
+    font-family: var(--font-display);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    font-size: var(--step-micro);
+    color: var(--color-accent-dark);
+  }
+
+  .photos {
+    padding: var(--space-3xl) 0 0;
+  }
+
+  .photos .head {
+    margin-bottom: var(--space-xl);
+  }
+
+  .photos h2 {
+    font-size: var(--step-1);
+    margin: 0.35em 0 0;
+  }
+
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .more {
+    margin-top: var(--space-xl);
+  }
+
+  .more a {
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  @media (max-width: 860px) {
+    .split,
+    .posts {
+      grid-template-columns: 1fr;
+    }
+
+    figure :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>

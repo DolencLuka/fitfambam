@@ -1,0 +1,247 @@
+---
+import Wordmark from "./Wordmark.astro";
+import { nav } from "../lib/site";
+
+const path = Astro.url.pathname;
+---
+
+<header class="header" data-header>
+  <div class="bar wrap">
+    <a class="logo" href="/" aria-label="FitFamBam home">
+      <Wordmark compact />
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={
+                  item.href === "/"
+                    ? path === "/"
+                      ? "page"
+                      : undefined
+                    : path.startsWith(item.href)
+                      ? "page"
+                      : undefined
+                }
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <p class="langs" aria-label="Language">
+        <span class="on" lang="en" aria-current="true">EN</span>
+        <span class="sep" aria-hidden="true">|</span>
+        <a class="off" href="/sl" lang="sl" title="Slovenščina — coming soon">SL</a>
+      </p>
+      <details class="menu">
+        <summary aria-label="Open menu">
+          <span></span><span></span>
+        </summary>
+        <div class="panel">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href="/sl" lang="sl">SL <small>coming</small></a>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector("[data-header]");
+  if (header instanceof HTMLElement) {
+    const sync = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 16);
+    };
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+  }
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    height: var(--header-h);
+    color: var(--color-ink-inverse);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background var(--duration) var(--ease), height var(--duration) var(--ease),
+      border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+  }
+
+  .header.is-scrolled,
+  :global(body:not(.cover)) .header {
+    height: var(--header-h-scrolled);
+    color: var(--color-ink);
+    background: rgb(246 245 242 / 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom-color: var(--color-line);
+  }
+
+  .bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    height: 100%;
+    gap: var(--space-l);
+  }
+
+  .logo {
+    text-decoration: none;
+    color: inherit;
+    justify-self: start;
+  }
+
+  .nav ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xl);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav a {
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    font-weight: 400;
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: inherit;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    opacity: 0.82;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav a:hover,
+  .nav a[aria-current="page"] {
+    opacity: 1;
+    border-bottom-color: currentColor;
+    color: inherit;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    justify-self: end;
+  }
+
+  .langs {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    font-weight: 400;
+    letter-spacing: var(--track-caps);
+  }
+
+  .on {
+    color: inherit;
+  }
+
+  .off {
+    color: inherit;
+    opacity: 0.55;
+    text-decoration: none;
+  }
+
+  .off:hover {
+    opacity: 1;
+    color: inherit;
+  }
+
+  .sep {
+    opacity: 0.4;
+  }
+
+  .menu {
+    display: none;
+    position: relative;
+  }
+
+  .menu summary {
+    list-style: none;
+    cursor: pointer;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    gap: 6px;
+    border: 1px solid currentColor;
+    background: transparent;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu summary span {
+    display: block;
+    width: 1rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.6rem);
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-line);
+    padding: var(--space-m);
+    min-width: 14rem;
+    display: grid;
+    gap: 0.25rem;
+    color: var(--color-ink);
+  }
+
+  .panel a {
+    text-decoration: none;
+    color: var(--color-ink);
+    padding: 0.55rem 0.4rem;
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+  }
+
+  .panel a:hover {
+    color: var(--color-accent-dark);
+  }
+
+  .panel small {
+    color: var(--color-muted);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 860px) {
+    .nav,
+    .langs {
+      display: none;
+    }
+
+    .bar {
+      grid-template-columns: 1fr auto;
+    }
+
+    .menu {
+      display: block;
+    }
+  }
+</style>

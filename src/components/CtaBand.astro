@@ -1,0 +1,72 @@
+---
+import { getImage } from "astro:assets";
+import { site } from "../lib/site";
+import bandImg from "../assets/from-wp/beach-looking-out.webp";
+
+interface Props {
+  title?: string;
+  accent?: string;
+  text?: string;
+}
+
+const {
+  title = "Write when you want to",
+  accent = "talk.",
+  text = "No forms that pretend to send. No funnel. A real inbox, read at home.",
+} = Astro.props;
+
+const bg = await getImage({ src: bandImg, width: 1920, format: "webp", quality: 70 });
+---
+
+<section class="band" style={`--band-image: url('${bg.src}')`}>
+  <div class="scrim"></div>
+  <div class="wrap">
+    <h2>{title} <span class="accent">{accent}</span></h2>
+    <p>{text}</p>
+    <a class="btn btn-ghost" href={`mailto:${site.email}`}>Email {site.email}</a>
+  </div>
+</section>
+
+<style>
+  .band {
+    position: relative;
+    color: var(--color-ink-inverse);
+    padding: var(--space-4xl) 0;
+    text-align: center;
+    background-color: var(--color-forest);
+    background-image: var(--band-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+
+  .scrim {
+    position: absolute;
+    inset: 0;
+    background: rgb(10 10 10 / 0.52);
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    font-size: var(--step-1);
+    max-width: 18ch;
+    margin: 0 auto 0.6em;
+  }
+
+  p {
+    color: rgb(246 245 242 / 0.82);
+    max-width: 32rem;
+    margin: 0 auto var(--space-xl);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .band {
+      background-attachment: scroll;
+    }
+  }
+</style>

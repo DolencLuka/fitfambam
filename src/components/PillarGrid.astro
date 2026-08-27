@@ -1,0 +1,116 @@
+---
+import { Image } from "astro:assets";
+import moveImg from "../assets/from-wp/beach-pier.webp";
+import eatImg from "../assets/from-wp/kitchen-board.webp";
+import restImg from "../assets/from-wp/beach-looking-out.webp";
+import togetherImg from "../assets/from-wp/couple.webp";
+
+const pillars = [
+  {
+    name: "Move",
+    text: "Walks, hills, a few honest sessions. Enough to stay capable. Not a programme that needs a locker room.",
+    image: moveImg,
+    alt: "A long pier stretching into the sea",
+  },
+  {
+    name: "Eat",
+    text: "Food that a family will actually sit down to. Cooked at home more often than not. Simple, not precious.",
+    image: eatImg,
+    alt: "Sandwiches on a kitchen board",
+  },
+  {
+    name: "Rest",
+    text: "Sleep, quiet, and the unfashionable work of stopping. Training without recovery is just getting tired.",
+    image: restImg,
+    alt: "Looking out over the water from a beach",
+  },
+  {
+    name: "Together",
+    text: "The point of the other three. Kids in the kitchen. A path on Sunday. Showing up in the same room.",
+    image: togetherImg,
+    alt: "Luka and Mariah",
+  },
+];
+---
+
+<ul class="grid">
+  {
+    pillars.map((p) => (
+      <li>
+        <article>
+          <div class="media">
+            <Image src={p.image} alt={p.alt} widths={[400, 700, 1000]} sizes="(min-width: 900px) 25vw, 90vw" quality={70} format="webp" />
+          </div>
+          <h3>{p.name}</h3>
+          <p>{p.text}</p>
+        </article>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-l);
+  }
+
+  article {
+    height: 100%;
+  }
+
+  .media {
+    border-radius: var(--radius-m);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    margin-bottom: var(--space-m);
+    background: var(--color-line);
+  }
+
+  .media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  article:hover .media :global(img) {
+    transform: scale(1.04);
+  }
+
+  h3 {
+    font-size: var(--step-2);
+    margin-bottom: 0.35em;
+  }
+
+  p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .media {
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    article:hover .media :global(img) {
+      transform: none;
+    }
+  }
+</style>

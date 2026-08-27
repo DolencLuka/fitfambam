@@ -1,0 +1,100 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import CtaBand from "../../components/CtaBand.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("journal");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = post.data.pubDate.toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+const kicker = post.data.archive
+  ? ["From the archive", ...post.data.tags].join(" · ")
+  : post.data.tags.join(" · ");
+---
+
+<Layout title={post.data.title} description={post.data.description} article>
+  <article>
+    <header class="page-hero wrap">
+      {kicker && <p class="kicker">{kicker}</p>}
+      <h1>{post.data.title}</h1>
+      {post.data.archive && (
+        <p class="archive-note">From the 2015 FitFamBam journal, written by Mariah.</p>
+      )}
+      <p class="meta">
+        <time datetime={post.data.pubDate.toISOString()}>{date}</time>
+        <span>{post.data.author}</span>
+      </p>
+    </header>
+
+    <figure class="hero">
+      <Image
+        src={post.data.hero}
+        alt={post.data.heroAlt}
+        widths={[800, 1200, 1600]}
+        sizes="100vw"
+        quality={72}
+        format="webp"
+      />
+    </figure>
+
+    <div class="wrap body">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+  <CtaBand />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-3xl) 0 var(--space-l);
+  }
+
+  h1 {
+    font-size: var(--step-1);
+    max-width: 18ch;
+    margin: 0.3em 0 0.5em;
+  }
+
+  .archive-note {
+    max-width: 36rem;
+    margin: 0 0 0.85em;
+    color: var(--color-accent-dark);
+    font-size: var(--step-small);
+  }
+
+  .meta {
+    display: flex;
+    gap: var(--space-m);
+    color: var(--color-muted);
+    font-size: var(--step-small);
+    margin: 0;
+  }
+
+  .hero {
+    margin: 0 0 var(--space-2xl);
+  }
+
+  .hero :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+  }
+
+  .body {
+    padding-bottom: var(--space-3xl);
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+interface Props {
+  compact?: boolean;
+  inverse?: boolean;
+}
+
+const { compact = false, inverse = false } = Astro.props;
+---
+
+<span class:list={["wordmark", { compact, inverse }]}>
+  <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+    <rect x="1.25" y="1.25" width="29.5" height="29.5" fill="none" stroke="currentColor" stroke-width="1.2" />
+    <circle cx="16" cy="16" r="3.2" fill="none" stroke="currentColor" stroke-width="1.2" />
+  </svg>
+  <span class="name">FitFamBam</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .mark {
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: none;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.28em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .compact .name {
+    font-size: 0.82rem;
+    letter-spacing: 0.24em;
+  }
+
+  .compact .mark {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+</style>

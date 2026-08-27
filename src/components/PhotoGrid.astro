@@ -1,0 +1,138 @@
+---
+import { Image } from "astro:assets";
+import couple from "../assets/from-wp/couple.webp";
+import meadow from "../assets/from-wp/countryside-meadow.webp";
+import kitchen from "../assets/from-wp/kitchen-board.webp";
+import pier from "../assets/from-wp/beach-pier.webp";
+import lookingOut from "../assets/from-wp/beach-looking-out.webp";
+
+const photos = [
+  { src: meadow, alt: "A meadow and woods in the Slovenian countryside", caption: "Near home", span: "wide" },
+  { src: couple, alt: "Luka and Mariah", caption: "Luka and Mariah", span: "tall" },
+  { src: kitchen, alt: "Sandwiches on a kitchen board", caption: "The kitchen board", span: "" },
+  { src: pier, alt: "A pier stretching into the sea", caption: "The pier", span: "wide" },
+  { src: lookingOut, alt: "Looking out over the water from a beach", caption: "Looking out", span: "full" },
+];
+---
+
+<ul class="grid">
+  {
+    photos.map((photo) => (
+      <li class={photo.span}>
+        <figure>
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            widths={[480, 800, 1200, 1600]}
+            sizes="(min-width: 900px) 50vw, 100vw"
+            quality={72}
+            format="webp"
+          />
+          <figcaption>
+            <span>{photo.caption}</span>
+          </figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0.4rem;
+  }
+
+  figure {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    background: var(--color-ink);
+    height: 100%;
+  }
+
+  figure :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 11;
+    transition: transform 0.8s var(--ease), filter 0.8s var(--ease);
+  }
+
+  .tall figure :global(img) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .wide figure :global(img) {
+    aspect-ratio: 16 / 10;
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+
+  .full figure :global(img) {
+    aspect-ratio: 21 / 9;
+  }
+
+  figcaption {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: end start;
+    padding: var(--space-l);
+    color: var(--color-ink-inverse);
+    background: rgb(10 10 10 / 0);
+    transition: background var(--duration) var(--ease);
+  }
+
+  figcaption span {
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
+  }
+
+  figure:hover figcaption {
+    background: rgb(10 10 10 / 0.32);
+  }
+
+  figure:hover figcaption span {
+    opacity: 1;
+    transform: none;
+  }
+
+  figure:hover :global(img) {
+    transform: scale(1.04);
+  }
+
+  @media (max-width: 800px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tall figure :global(img),
+    .wide figure :global(img),
+    .full figure :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    figure:hover :global(img) {
+      transform: none;
+    }
+
+    figcaption span {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

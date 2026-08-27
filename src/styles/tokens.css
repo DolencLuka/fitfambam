@@ -1,0 +1,162 @@
+/* FitFamBam design tokens
+   -----------------------------------------------
+   Visual source of truth. Change a value here and the site follows.
+   Written for a designer: each token says what it is for.
+
+   2026 SCRN modernization (FinalDestiny / Cristi Macovei, Themeforest):
+   photography as the design, thin tracked type, two-tone charcoal/paper,
+   one quiet accent. Not Avada. Not gym condensed. Not olive cards.
+*/
+
+@font-face {
+  font-family: "Outfit";
+  src: url("../fonts/outfit-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("../fonts/instrument-sans.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("../fonts/instrument-sans-italic.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- Color ---------- */
+
+  /* Paper: true cool off-white, like a photography portfolio print.
+     Not the previous warm gym cream. Not a SaaS #fff-only void. */
+  --color-paper: #f6f5f2;
+
+  /* Paper raised: pure white for lifted surfaces, form fields, overlays. */
+  --color-paper-raised: #ffffff;
+
+  /* Ink: near-black charcoal. Classic SCRN two-tone. */
+  --color-ink: #111111;
+
+  /* Muted: captions, meta. Dark enough for WCAG AA on paper. */
+  --color-muted: #5c5c58;
+
+  /* Line: hairline rules. Cool, not beige. */
+  --color-line: #e3e2dd;
+
+  /* Accent: ONE colour. Quiet cyan, like water and sky in the beach photos.
+     Use on links, a single word, the focus ring. Not olive. Not gym-orange. */
+  --color-accent: #2f7d8c;
+
+  /* Accent dark: hover / small-text links (stronger contrast on paper). */
+  --color-accent-dark: #215f6b;
+
+  /* Accent soft: pale wash for archive chips and quiet bands. */
+  --color-accent-soft: #e4eef0;
+
+  /* Night: near-black for footer, photo scrims, the sticky bar over photos.
+     Related to ink, not a second accent. */
+  --color-forest: #0e0e0e;
+
+  /* Ink on dark: paper sitting on night. */
+  --color-ink-inverse: #f6f5f2;
+
+  /* Overlay: scrim over full-bleed photos so thin white type stays readable. */
+  --color-overlay: rgb(10 10 10 / 0.38);
+
+  /* Focus: visible keyboard ring. Uses accent, 3px, offset so it never hides. */
+  --color-focus: var(--color-accent);
+
+  /* ---------- Type ---------- */
+
+  /* Display: Outfit ExtraLight. Thin, wide, photographic.
+     The 2015 FIT FAM BAM wordmark is the north star — not Oswald, not condensed. */
+  --font-display: "Outfit", "Avenir Next", "Century Gothic", sans-serif;
+
+  /* Body: Instrument Sans. Human, readable, not Inter-on-white. */
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+
+  /* Fluid type. Display is large but thin, so it can be bigger than a bold face. */
+  --step-display: clamp(2.4rem, 1rem + 7vw, 6.25rem);
+  --step-1: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  --step-2: clamp(1.35rem, 1.15rem + 0.8vw, 1.7rem);
+  --step-3: clamp(1.1rem, 1.02rem + 0.3vw, 1.25rem);
+  --step-body: 1.0625rem;
+  --step-small: 0.875rem;
+  --step-micro: 0.72rem;
+
+  /* Line height: display is open (thin type needs air); body is readable. */
+  --leading-display: 1.05;
+  --leading-body: 1.7;
+  --leading-snug: 1.35;
+
+  /* Tracking: thin caps need a lot of air. Body stays honest. */
+  --track-display: 0.18em;
+  --track-wordmark: 0.42em;
+  --track-caps: 0.22em;
+  --track-body: 0.01em;
+
+  /* Display weight: ExtraLight. Do not bump this toward gym-bold. */
+  --weight-display: 200;
+  --weight-body: 400;
+
+  /* ---------- Space ---------- */
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.75rem;
+  --space-m: 1rem;
+  --space-l: 1.5rem;
+  --space-xl: 2.25rem;
+  --space-2xl: 3.5rem;
+  --space-3xl: 5.5rem;
+  --space-4xl: 8rem;
+
+  /* Page gutter: side margins that grow on wide screens. */
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+
+  /* Content measure: readable line length for articles. */
+  --measure: 38rem;
+
+  /* Wide measure: intro paragraphs and section copy. */
+  --measure-wide: 42rem;
+
+  /* Site max: full-width sections still stop somewhere. */
+  --wrap: 72rem;
+
+  /* Photo grid can go a little wider. */
+  --wrap-wide: 82rem;
+
+  /* ---------- Shape ---------- */
+
+  /* Radius: almost none. Photography portfolios are square, not pill-card. */
+  --radius-s: 0;
+  --radius-m: 0.15rem;
+  --radius-l: 0.25rem;
+
+  /* ---------- Shadow ---------- */
+
+  --shadow-quiet: 0 1px 0 rgb(17 17 17 / 0.06);
+
+  /* ---------- Motion ---------- */
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 280ms;
+
+  /* Header: slim. Tighter still when the sticky bar is solid. */
+  --header-h: 4rem;
+  --header-h-scrolled: 3.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0.01ms;
+  }
+}

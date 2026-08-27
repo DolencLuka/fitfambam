@@ -1,0 +1,26 @@
+# 4 Things I Would Have Done Differently During Pregnancy
+
+- status: publish
+- date: 2015-07-10
+- slug: 4-things-i-would-have-done-differently-during-pregnancy
+- source: wordpress sql, voice is Mariah first-person
+
+All in all, I had a great pregnancy with no regrets. I was healthy and fit and had an all natural birth with no interventions. For me, that was great. That was what I had wanted. However, looking back there are some things I learned that I will apply to my next pregnancy.
+
+1. Be More Active
+
+When I got pregnant I stopped weight lifting. It was my first pregnancy and I played it on the cautious side thinking it was safer not to push myself too hard. I was still active by walking and hiking or doing something like that every day. The key was that I did  something  every day for my physical health. However, I really believe I should have continued light weight lifting. In my first trimester I actually lost weight because I lost so much muscle mass. Also, my recovery took longer than it should have taken. I believe it's partially because I tried to do too much too soon and partially because I could have been in better shape. Light weight lifting throughout pregnancy would have also helped with labor. Make sure you ask your doctor about what kind of physical exercise is safe for you during your pregnancy.
+
+2. Get To Know More Pregnant Mamas
+
+It's amazing how connecting with other moms feels so good. Especially as a first-time mom. I had a few moms to hang around and talk about all the weird things your body is doing to you. Mostly my sister-in-law who was also pregnant with her third. This was also nice because I got to ask her a lot of questions. In fact, when you're pregnant it's sometimes hard to talk about anything else. It's almost like you become obsessed with the bizarre things you're experiencing as a tiny human is taking over your body. Later on these friendships are great also for your babies to play together when they get old enough for that. One piece of advice: there are plenty of women who are negative about their lives, jobs, spouses, and everything else, don't spend time with them. They will bring you down. Even if these are friends, limit your time with them. Instead, find women who are positive and supportive. Find women who will empower you and make you feel energized about being a woman and motherhood.
+
+3. Practice Birth More
+
+It sounds strange, but you can practice birth and there is a lot of information out there to help you. I practiced breathing every day. Sometimes I practiced only for about 2 minutes and other times for 10 minutes. I also did daily birth meditation, visualization, and affirmations. I started doing this seriously in the third trimester. If you truly want a natural birth then these are the things to help prepare you. Looking back after birth I can see how this helped immensely, but I definitely needed to do more and be more focused. When I hit transition, around 7-8 cm dilated, I lost control of my breathing. This is when it would have been really great to have a doula. Had I been more prepared I know this would not have happened. That is around the same time that I felt fear as I began to dread the next contraction. Then, in a moment of utter clarity, I thought, "No, I cannot become afraid or this will take so much longer.  I can do this! " The only way I know I could think with that kind of clarity at that point was because of the preparation I had done. Birth was tough, but overall positive. Looking back I felt like I would have done better if I had done more focused practice. For my next birth I would like to do   hypno-birthing  .
+
+4. Enjoy The End Of Pregnancy
+
+Towards the end of pregnancy I was absolutely miserable, like all women. From 38 weeks on, I was ready to have that baby and I didn't want to wait another day. I went all the way to 40 weeks and 2 days. At that point it's hard to do anything and it's uncomfortable to move at all. It's at this time that if you don't have something to distract you, you will become totally consumed with how you have to have that baby NOW! However, the baby will come exactly at the right time for him/her. I wouldn't want to force my baby out anyway! At that time though you could really care less. So I think it would have been better if I had planned little things, little rewards, to help the time pass. I would have scheduled a pedicure one day, a manicure the next, a day at a pool, a massage, a trip to the seaside, gone to the opera, every day a little something. This gives you something to look forward to and something to distract you. From 38.5 weeks on, give yourself little daily luxuries that make you happy. Make yourself happy. Being relaxed will also help you go into labor.
+
+Is there something that you did in your pregnancy that really helped you? What would you have done differently? I find talking with other moms about their experiences SO interesting!

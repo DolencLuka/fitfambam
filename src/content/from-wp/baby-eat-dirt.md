@@ -1,0 +1,38 @@
+# I Let My Baby Eat Dirt
+
+- status: publish
+- date: 2015-06-24
+- slug: i-let-my-baby-eat-dirt
+- source: wordpress sql, voice is Mariah first-person
+
+This past week was magical. Olivia and I spent several days working in the garden with my sister-in-law, Katja*, at her house. We planted lots of veggies and then built an herb spiral. It was a lot of work. Enjoyable work. The whole time Olivia and Katja's son, Nejc**, played out in the garden too. Nejc is exactly two weeks older than Olivia so the two of them are good buddies. We had a blanket for them to play on, but they pretty quickly made their way off the blanket and into all sorts of things in the yard. They played in the straw, in the rocks, in the dirt, with the packets of seeds we were planning to plant, with the watering cans, and just about everything else they could get their grubby little hands on. At one point Olivia took a huge rock covered in dirt and put that thing right into her mouth. I watched and had this strange moment where my mind went back and forth.
+
+"AH! Should I stop her? That's a lot of dirt. Maybe she'll spit it out. Well, even if she does, who knows where that stuff has been or what happened to it. Does it really matter?"
+
+ [lightbox thumbnail="http://fitfambam.com/wp-content/uploads/2015/05/IMG_0022.jpg" width="292" height="400" float="left"]http://fitfambam.com/wp-content/uploads/2015/05/IMG_0022.jpg[/lightbox] 
+
+ 
+
+ [lightbox thumbnail="http://fitfambam.com/wp-content/uploads/2015/05/IMG_0023.jpg" width="292" height="400" float="left"]http://fitfambam.com/wp-content/uploads/2015/05/IMG_0023.jpg[/lightbox] 
+
+ 
+
+[lightbox thumbnail="http://fitfambam.com/wp-content/uploads/2015/05/IMG_0024.jpg" width="292" height="400" float="left"]http://fitfambam.com/wp-content/uploads/2015/05/IMG_0024.jpg[/lightbox]
+
+You know, in our minds this all happens in an instant. The instant she put it in her mouth. A second later I thought,
+
+"Eh, it's probably good for her."
+
+And I let her go right on eating dirt and chewing on rocks. She really enjoyed it! At this point some of you reading may think I'm totally nuts. Crazy! Endangering my child! I admit I had a few second thoughts on it and so I hit up the search engines and found all the horror stories: dangerous bacteria, parasites, chemical pesticides, disease! But honestly, most of it sounded like it was there to strike fear into young mothers. These are the worst possible outcomes of your child eating dirt, but they are  possible . Then I searched for some benefits of eating dirt and it turns out there's a   research   that found that microbial exposure early in life may have great benefits for a child's immune system. What was more interesting to me was that the study showed that a lack of early childhood exposure could not be corrected or compensated for later in life.
+
+I really like the idea of Olivia being exposed to all sorts of different microbial environments. I feel it's really good for her immune system. Ever since she started putting things in her mouth, we never made her stop. That said, we are not having a complete free-for-all here. We do make some discerning interceptions. For instance, while we were travelling. Going through airports you come in contact with so many people from so many different countries. That, for me, is too much. So while we were waiting at terminals and playing in the airplane I didn't let her put things in her mouth. She still crawled around on the ground and touched everything, but afterwards I went and washed her hands. I don't know if it did any good because in the end she was reaching out to strangers and they would just pick her up. On the one side, this makes me nervous. A stranger from who-knows-where carrying who-knows-what kind of germs carrying my baby with their face inches from hers? Oh, it gets better. Olivia is so friendly she would touch their faces. And then put her fingers in their mouth. Yes. I cringed on the inside. But on the other hand, I love that she loves people and I don't want to inhibit this natural gift. Also, the look on their faces was incredible. Absolute joy. Someone barely spoke English and yet this transcended all barriers. Still, as soon as we said our goodbyes I rushed her to the bathroom to wash her hands.
+
+For the most part we let her chew on just about anything and have decided it's good for her immune system. So far, it has been! She's now 11 months old and has only really been sick once. That's a pretty good track record. It's nice to have a husband who's on the same page too. Also, I'm so grateful for family like Katja. She feels pretty much exactly the same on this. All too often some (good-natured, I'm sure) person will inform me, "Uh oh! Your baby has got something in her mouth!" or "She's putting that in her mouth!" Yes, yes she is. When we are with Katja and Nejc, things are more relaxed. Katja and I keep an eye on the two, but for the most part we just let them explore to their hearts' content. It's nice being around someone who is equally, if not more so, relaxed about babies. Plus, I figure I could spend all my time chasing Olivia around keeping her from putting things in her mouth OR I can let her do what her little instincts are telling her to do and that is to come in contact with as many things as she can that will build her immune health for later in life.
+
+Have you ever let your baby eat dirt? Or do you take the "sterilize the pacifier" route? Mom's always tell me, once you get to the third kid you don't have time to care anymore!
+
+ 
+
+*(pronounced KAH-TYA)
+
+**(pronounced NAY-TS/NATES)
