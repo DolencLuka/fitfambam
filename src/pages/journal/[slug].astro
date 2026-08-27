@@ -40,17 +40,19 @@ const kicker = post.data.archive
       </p>
     </header>
 
-    <figure class="hero">
-      <Image
-        src={post.data.hero}
-        alt={post.data.heroAlt}
-        widths={[800, 1200, 1600]}
-        sizes="100vw"
-        quality={72}
-        format="webp"
-      />
-      {post.data.heroAlt && <figcaption>{post.data.heroAlt}</figcaption>}
-    </figure>
+    {post.data.hero && (
+      <figure class="hero">
+        <Image
+          src={post.data.hero}
+          alt={post.data.heroAlt ?? ""}
+          widths={[800, 1200, 1600]}
+          sizes="100vw"
+          quality={72}
+          format="webp"
+        />
+        {post.data.heroAlt && <figcaption>{post.data.heroAlt}</figcaption>}
+      </figure>
+    )}
 
     <div class="prose body">
       <Content components={{ Figure, Pair }} />

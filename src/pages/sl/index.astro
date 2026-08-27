@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/Hero.astro";
 import Section from "../../components/Section.astro";
@@ -8,13 +7,12 @@ import PhotoGrid from "../../components/PhotoGrid.astro";
 import PostCard from "../../components/PostCard.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { copy } from "../../lib/i18n";
+import { featuredJournal } from "../../lib/featured";
 import heroImg from "../../assets/from-wp/countryside-meadow.webp";
 import whyImg from "../../assets/from-wp/couple.webp";
 
 const t = copy("sl");
-const posts = (await getCollection("journal"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+const posts = await featuredJournal(3);
 ---
 
 <Layout
