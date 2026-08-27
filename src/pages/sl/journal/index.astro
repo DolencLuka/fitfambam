@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import PostCard from "../../../components/PostCard.astro";
+import CtaBand from "../../../components/CtaBand.astro";
+import { copy } from "../../../lib/i18n";
+
+const t = copy("sl");
+const posts = (await getCollection("journal")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout
+  title="Dnevnik"
+  description={t.description}
+  locale="sl"
+>
+  <header class="page-hero wrap">
+    <p class="kicker">Dnevnik</p>
+    <h1>Družinski <span class="accent">dnevnik.</span></h1>
+    <p class="lede">
+      Zapisi so v angleščini. Mariah je tu pisala leta 2015. Tisti kosi ostanejo, z njenim imenom. Luka piše, ko ima kaj vrednega obdržati. Ni program. Ni poberka tujih nasvetov.
+    </p>
+  </header>
+
+  <div class="wrap-wide list">
+    {posts.map((post) => <PostCard post={post} locale="sl" />)}
+  </div>
+
+  <CtaBand locale="sl" />
+</Layout>
+
+<style>
+  .page-hero {
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+
+  h1 {
+    font-size: var(--step-1);
+    max-width: 14ch;
+    margin: 0.3em 0 0.5em;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    padding-bottom: var(--space-3xl);
+  }
+
+  @media (max-width: 860px) {
+    .list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

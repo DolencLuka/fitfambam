@@ -1,26 +1,35 @@
 ---
 import Wordmark from "./Wordmark.astro";
-import { nav } from "../lib/site";
+import { copy, homeHref, localeFromPath, nav, siblingPath, type Locale } from "../lib/i18n";
 
-const path = Astro.url.pathname;
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const t = copy(locale);
+const items = nav[locale];
+const home = homeHref(locale);
+const other = siblingPath(Astro.url.pathname);
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 ---
 
 <header class="header" data-header>
   <div class="bar wrap">
-    <a class="logo" href="/" aria-label="FitFamBam home">
+    <a class="logo" href={home} aria-label="FitFamBam home">
       <Wordmark compact />
     </a>
 
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav" aria-label={t.navAria}>
       <ul>
         {
-          nav.map((item) => (
+          items.map((item) => (
             <li>
               <a
                 href={item.href}
                 aria-current={
-                  item.href === "/"
-                    ? path === "/"
+                  item.href === home
+                    ? path === home
                       ? "page"
                       : undefined
                     : path.startsWith(item.href)
@@ -37,18 +46,36 @@ const path = Astro.url.pathname;
     </nav>
 
     <div class="tools">
-      <p class="langs" aria-label="Language">
-        <span class="on" lang="en" aria-current="true">EN</span>
-        <span class="sep" aria-hidden="true">|</span>
-        <a class="off" href="/sl" lang="sl" title="Slovenščina — coming soon">SL</a>
+      <p class="langs" aria-label={t.langAria}>
+        {
+          locale === "en" ? (
+            <>
+              <span class="on" lang="en" aria-current="true">EN</span>
+              <span class="sep" aria-hidden="true">|</span>
+              <a class="off" href={other} lang="sl">SL</a>
+            </>
+          ) : (
+            <>
+              <a class="off" href={other} lang="en">EN</a>
+              <span class="sep" aria-hidden="true">|</span>
+              <span class="on" lang="sl" aria-current="true">SL</span>
+            </>
+          )
+        }
       </p>
       <details class="menu">
-        <summary aria-label="Open menu">
+        <summary aria-label={t.menu}>
           <span></span><span></span>
         </summary>
         <div class="panel">
-          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
-          <a href="/sl" lang="sl">SL <small>coming</small></a>
+          {items.map((item) => <a href={item.href}>{item.label}</a>)}
+          {
+            locale === "en" ? (
+              <a href={other} lang="sl">SL</a>
+            ) : (
+              <a href={other} lang="en">EN</a>
+            )
+          }
         </div>
       </details>
     </div>
@@ -223,11 +250,6 @@ const path = Astro.url.pathname;
 
   .panel a:hover {
     color: var(--color-accent-dark);
-  }
-
-  .panel small {
-    color: var(--color-muted);
-    letter-spacing: 0.08em;
   }
 
   @media (max-width: 860px) {

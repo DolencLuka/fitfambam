@@ -1,17 +1,25 @@
 ---
 import { Image } from "astro:assets";
+import { copy, localeFromPath, type Locale } from "../lib/i18n";
 import couple from "../assets/from-wp/couple.webp";
 import meadow from "../assets/from-wp/countryside-meadow.webp";
 import kitchen from "../assets/from-wp/kitchen-board.webp";
 import pier from "../assets/from-wp/beach-pier.webp";
 import lookingOut from "../assets/from-wp/beach-looking-out.webp";
 
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const { photos: labels } = copy(locale);
+
 const photos = [
-  { src: meadow, alt: "A meadow and woods in the Slovenian countryside", caption: "Near home", span: "wide" },
-  { src: couple, alt: "Luka and Mariah", caption: "Luka and Mariah", span: "tall" },
-  { src: kitchen, alt: "Sandwiches on a kitchen board", caption: "The kitchen board", span: "" },
-  { src: pier, alt: "A pier stretching into the sea", caption: "The pier", span: "wide" },
-  { src: lookingOut, alt: "Looking out over the water from a beach", caption: "Looking out", span: "full" },
+  { src: meadow, alt: labels.alts[0], caption: labels.captions[0], span: "wide" },
+  { src: couple, alt: labels.alts[1], caption: labels.captions[1], span: "tall" },
+  { src: kitchen, alt: labels.alts[2], caption: labels.captions[2], span: "" },
+  { src: pier, alt: labels.alts[3], caption: labels.captions[3], span: "wide" },
+  { src: lookingOut, alt: labels.alts[4], caption: labels.captions[4], span: "full" },
 ];
 ---
 

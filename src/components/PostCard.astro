@@ -1,18 +1,22 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { copy, localeFromPath, type Locale } from "../lib/i18n";
 
 interface Props {
   post: CollectionEntry<"journal">;
+  locale?: Locale;
 }
 
 const { post } = Astro.props;
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const t = copy(locale);
 const date = post.data.pubDate.toLocaleDateString("en-GB", {
   day: "numeric",
   month: "long",
   year: "numeric",
 });
-const kicker = post.data.archive ? "From the archive" : post.data.tags[0];
+const kicker = post.data.archive ? t.archiveKicker : post.data.tags[0];
 ---
 
 <article class="card">

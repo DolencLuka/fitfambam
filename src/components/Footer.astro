@@ -1,7 +1,18 @@
 ---
 import Wordmark from "./Wordmark.astro";
 import { site } from "../lib/site";
+import { copy, homeHref, localeFromPath, nav, siblingPath, type Locale } from "../lib/i18n";
 import { getCollection } from "astro:content";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const t = copy(locale);
+const home = homeHref(locale);
+const visit = nav[locale].filter((item) => item.href !== home);
+const other = siblingPath(Astro.url.pathname);
 
 const posts = (await getCollection("journal"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -15,24 +26,25 @@ const year = new Date().getFullYear();
     <div class="brand">
       <Wordmark inverse />
       <p>
-        A family journal from {site.place}. Mariah’s 2015 writing, and new notes
-        from Luka. Not a gym. Not a membership.
+        {t.footer.brand}
       </p>
       <a href={`mailto:${site.email}`}>{site.email}</a>
     </div>
 
     <div>
-      <h2>Visit</h2>
+      <h2>{t.footer.visit}</h2>
       <ul>
-        <li><a href="/about">About</a></li>
-        <li><a href="/journal">Journal</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/sl">Slovenščina <span>(coming)</span></a></li>
+        {visit.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+        <li>
+          <a href={other} lang={locale === "en" ? "sl" : "en"}>{t.footer.otherLang}</a>
+        </li>
       </ul>
     </div>
 
     <div>
-      <h2>Recent notes</h2>
+      <h2>{t.footer.recent}</h2>
       <ul>
         {
           posts.map((post) => (
@@ -46,7 +58,7 @@ const year = new Date().getFullYear();
   </div>
   <div class="wrap legal">
     <p>© {year} {site.name}. {site.owner}.</p>
-    <p>No tracking pixels. No invented reviews.</p>
+    <p>{t.footer.noTracking}</p>
   </div>
 </footer>
 
@@ -107,11 +119,6 @@ const year = new Date().getFullYear();
     letter-spacing: var(--track-caps);
     text-transform: uppercase;
     color: var(--color-ink-inverse);
-  }
-
-  span {
-    color: rgb(246 245 242 / 0.45);
-    font-size: 0.8em;
   }
 
   .legal {

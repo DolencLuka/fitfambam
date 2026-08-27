@@ -1,18 +1,23 @@
 ---
 import { getImage } from "astro:assets";
 import { site } from "../lib/site";
+import { copy, localeFromPath, type Locale } from "../lib/i18n";
 import bandImg from "../assets/from-wp/beach-looking-out.webp";
 
 interface Props {
   title?: string;
   accent?: string;
   text?: string;
+  locale?: Locale;
 }
 
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const t = copy(locale);
+
 const {
-  title = "Write when you want to",
-  accent = "talk.",
-  text = "No forms that pretend to send. No funnel. A real inbox, read at home.",
+  title = t.cta.title,
+  accent = t.cta.accent,
+  text = t.cta.text,
 } = Astro.props;
 
 const bg = await getImage({ src: bandImg, width: 1920, format: "webp", quality: 70 });
@@ -23,7 +28,7 @@ const bg = await getImage({ src: bandImg, width: 1920, format: "webp", quality: 
   <div class="wrap">
     <h2>{title} <span class="accent">{accent}</span></h2>
     <p>{text}</p>
-    <a class="btn btn-ghost" href={`mailto:${site.email}`}>Email {site.email}</a>
+    <a class="btn btn-ghost" href={`mailto:${site.email}`}>{t.cta.email.replace("{email}", site.email)}</a>
   </div>
 </section>
 

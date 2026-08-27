@@ -1,0 +1,182 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import { site } from "../../lib/site";
+import { copy } from "../../lib/i18n";
+import writeImg from "../../assets/from-wp/beach-pier.webp";
+
+const t = copy("sl");
+const form = t.contact;
+---
+
+<Layout
+  title="Kontakt"
+  description={t.description}
+  locale="sl"
+>
+  <div class="wrap layout">
+    <header>
+      <p class="kicker">Kontakt</p>
+      <h1>Reci <span class="accent">živjo.</span></h1>
+      <p class="lede">
+        Za to stranjo ni bota. Obrazec odpre tvoj poštni program. Če ne gre, napiši {site.email} sam.
+      </p>
+    </header>
+
+    <figure>
+      <Image src={writeImg} alt="Pomol v morje" widths={[640, 1000]} sizes="(min-width: 800px) 40vw, 90vw" quality={70} format="webp" />
+    </figure>
+  </div>
+
+  <div class="wrap grid">
+    <form class="form" action={`mailto:${site.email}`} method="get" enctype="text/plain">
+      <p class="notice">
+        To je <strong>mailto</strong>. Na strežniku se nič ne shrani. Pravi obrazec lahko pride pozneje, brez pretvarjanja zdaj.
+      </p>
+
+      <label>
+        {form.name}
+        <input type="text" name="name" autocomplete="name" required />
+      </label>
+
+      <label>
+        {form.email}
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+
+      <label>
+        {form.message}
+        <textarea name="body" rows="7" required placeholder={form.placeholder}></textarea>
+      </label>
+
+      <input type="hidden" name="subject" value="Živjo s FitFamBam.com" />
+
+      <button class="btn btn-primary" type="submit">{form.submit.replace("{email}", site.email)}</button>
+    </form>
+
+    <aside>
+      <h2>Zasebnost</h2>
+      <p>
+        Ne poganjamo sledilnih pikslov. Naslovov ne prodajamo. Če napišeš, preberemo. Lahko smo počasni. Imamo štiri otroke.
+      </p>
+      <h2>Kje</h2>
+      <p>Slovenija. Odgovarjava v slovenščini in angleščini.</p>
+      <p class="alt">
+        Raje prazno okno?
+        <a href={`mailto:${site.email}`}>Piši naravnost</a>.
+      </p>
+    </aside>
+  </div>
+</Layout>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+
+  h1 {
+    font-size: var(--step-1);
+    margin: 0.3em 0 0.5em;
+  }
+
+  figure {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  figure :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    padding-bottom: var(--space-4xl);
+  }
+
+  .form {
+    display: grid;
+    gap: var(--space-m);
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-line);
+    padding: var(--space-xl);
+  }
+
+  .notice {
+    margin: 0;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-size: var(--step-small);
+  }
+
+  label {
+    display: grid;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+  }
+
+  input,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: 0;
+    padding: 0.75rem 0.85rem;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-color: var(--color-accent);
+  }
+
+  aside h2 {
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--color-accent-dark);
+    margin: 0 0 0.5rem;
+  }
+
+  aside h2:not(:first-child) {
+    margin-top: var(--space-xl);
+  }
+
+  aside p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .alt {
+    margin-top: var(--space-l);
+  }
+
+  @media (max-width: 800px) {
+    .layout,
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    figure :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>

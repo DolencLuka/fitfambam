@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { copy, localeFromPath, type Locale } from "../lib/i18n";
 import wordmarkImg from "../assets/from-wp/fitfambam-wordmark.webp";
 
 interface Props {
@@ -8,9 +9,18 @@ interface Props {
   image: ImageMetadata;
   imageAlt: string;
   showHistoricMark?: boolean;
+  locale?: Locale;
+  scrollLabel?: string;
 }
 
-const { tagline, image, imageAlt, showHistoricMark = false } = Astro.props;
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const {
+  tagline,
+  image,
+  imageAlt,
+  showHistoricMark = false,
+  scrollLabel = copy(locale).scroll,
+} = Astro.props;
 ---
 
 <section class="hero" data-hero>
@@ -45,7 +55,7 @@ const { tagline, image, imageAlt, showHistoricMark = false } = Astro.props;
     }
     <h1 class="sr-only">FitFamBam</h1>
     <p class="tag">{tagline}</p>
-    <a class="cue" href="#about">Scroll</a>
+    <a class="cue" href="#about">{scrollLabel}</a>
   </div>
 </section>
 
