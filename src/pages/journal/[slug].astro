@@ -88,12 +88,35 @@ const kicker = post.data.archive
   }
 
   .hero {
-    margin: 0 0 var(--space-2xl);
+    width: min(100% - var(--gutter) * 2, var(--wrap));
+    margin-inline: auto;
+    margin-block: 0 var(--space-2xl);
   }
 
+  /*
+    Article hero: keep native aspect and faces.
+    Never reintroduce aspect-ratio + object-fit: cover (the old 16/8 crop).
+    Desktop: sit in the wrap, height-capped at --hero-max, contain, centered.
+    Phone: full width of the wrap, height auto. Figure/Pair in-body stay as they are.
+  */
   .hero :global(img) {
-    width: 100%;
+    display: block;
+    width: auto;
+    max-width: 100%;
     height: auto;
+    max-height: var(--hero-max);
+    margin-inline: auto;
+    object-fit: contain;
+    object-position: top;
+  }
+
+  @media (width <= 860px) {
+    .hero :global(img) {
+      width: 100%;
+      height: auto;
+      max-height: none;
+      object-fit: unset;
+    }
   }
 
   .hero figcaption {

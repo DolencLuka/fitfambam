@@ -153,6 +153,10 @@
   /* Header: slim. Tighter still when the sticky bar is solid. */
   --header-h: 4rem;
   --header-h-scrolled: 3.25rem;
+
+  /* Article hero: max height on desktop so the essay starts on the first screen.
+     Portraits shrink to this; landscapes also hit it. Never a 16/8 cover crop. */
+  --hero-max: 70vh;
 }
 
 @media (prefers-reduced-motion: reduce) {
