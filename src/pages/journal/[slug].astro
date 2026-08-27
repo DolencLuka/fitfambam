@@ -96,7 +96,7 @@ const kicker = post.data.archive
   /*
     Article hero: keep native aspect and faces.
     Never reintroduce aspect-ratio + object-fit: cover (the old 16/8 crop).
-    Desktop: sit in the wrap, height-capped at --hero-max, contain, centered.
+    Desktop: sit in the wrap, height-capped so title + photo + essay start share the first screen, contain, centered.
     Phone: full width of the wrap, height auto. Figure/Pair in-body stay as they are.
   */
   .hero :global(img) {
@@ -104,7 +104,7 @@ const kicker = post.data.archive
     width: auto;
     max-width: 100%;
     height: auto;
-    max-height: var(--hero-max);
+    max-height: min(70vh, calc(100dvh - var(--header-h) - 20rem));
     margin-inline: auto;
     object-fit: contain;
     object-position: top;
