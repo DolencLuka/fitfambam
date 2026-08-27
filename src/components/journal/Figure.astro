@@ -16,7 +16,7 @@ const widths =
     ? [800, 1200, 1600]
     : layout === "breakout"
       ? [640, 960, 1200, 1400]
-      : [400, 640, 800];
+      : [400, 640, 800, 1600];
 
 const sizes =
   layout === "full"
@@ -26,6 +26,7 @@ const sizes =
       : "(min-width: 640px) min(38rem, 100vw), 100vw";
 ---
 
+<!-- In-body only, hero excluded. Lightbox tokens: --lightbox-* in :root. -->
 <figure class:list={["journal-figure", `layout-${layout}`]}>
   <Image
     src={src}
@@ -47,6 +48,7 @@ const sizes =
   .journal-figure :global(img) {
     width: 100%;
     height: auto;
+    cursor: zoom-in;
   }
 
   figcaption {

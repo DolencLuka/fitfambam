@@ -18,13 +18,14 @@ const { items, layout = "breakout" } = Astro.props;
 const shown = items.slice(0, 3);
 const count = shown.length;
 
-const widths = [320, 480, 640, 800];
+const widths = [320, 480, 640, 800, 1600];
 const sizes =
   count >= 3
     ? "(min-width: 700px) 28vw, 100vw"
     : "(min-width: 700px) 40vw, 100vw";
 ---
 
+<!-- In-body only, hero excluded. Lightbox tokens: --lightbox-* in :root. -->
 <div class:list={["pair", `layout-${layout}`]} role="group">
   {
     shown.map((item) => (
@@ -65,6 +66,7 @@ const sizes =
   figure :global(img) {
     width: 100%;
     height: auto;
+    cursor: zoom-in;
   }
 
   figcaption {

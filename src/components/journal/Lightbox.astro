@@ -1,0 +1,317 @@
+---
+---
+
+<!-- In-body Figure/Pair only. Hero excluded. Tokens: --lightbox-* in :root. -->
+<dialog class="lightbox" aria-label="Photograph">
+  <button type="button" class="lightbox-close" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+      <path d="M4 4l10 10M14 4L4 14" />
+    </svg>
+  </button>
+  <figure class="lightbox-frame">
+    <div class="lightbox-photo">
+      <img alt="" />
+      <button type="button" class="lightbox-prev" aria-label="Previous">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path d="M11.5 3.5L5.5 9l6 5.5" />
+        </svg>
+      </button>
+      <button type="button" class="lightbox-next" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path d="M6.5 3.5L12.5 9l-6 5.5" />
+        </svg>
+      </button>
+    </div>
+    <figcaption class="lightbox-caption"></figcaption>
+  </figure>
+</dialog>
+
+<script>
+  const dialog = document.querySelector(".lightbox");
+  if (dialog instanceof HTMLDialogElement) {
+    const imgEl = dialog.querySelector(".lightbox-photo img");
+    const captionEl = dialog.querySelector(".lightbox-caption");
+    const closeBtn = dialog.querySelector(".lightbox-close");
+    const prevBtn = dialog.querySelector(".lightbox-prev");
+    const nextBtn = dialog.querySelector(".lightbox-next");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const items = () =>
+      [...document.querySelectorAll(".prose .journal-figure img, .prose .pair img")];
+
+    const largestSrc = (img) => {
+      const set = img.getAttribute("srcset");
+      if (!set) return img.currentSrc || img.src;
+      let best = img.currentSrc || img.src;
+      let bestW = 0;
+      for (const part of set.split(",")) {
+        const bits = part.trim().split(/\s+/);
+        const n = parseInt(bits[1] || "0", 10);
+        if (n >= bestW) {
+          bestW = n;
+          best = bits[0];
+        }
+      }
+      return best;
+    };
+
+    const captionFor = (img) =>
+      img.closest("figure")?.querySelector("figcaption")?.textContent?.trim() || "";
+
+    let index = 0;
+
+    const show = (nextIndex, nudge) => {
+      const list = items();
+      if (!list.length || !(imgEl instanceof HTMLImageElement) || !(captionEl instanceof HTMLElement)) return;
+      index = (nextIndex + list.length) % list.length;
+      const srcImg = list[index];
+      imgEl.src = largestSrc(srcImg);
+      imgEl.alt = srcImg.getAttribute("alt") || "";
+      captionEl.textContent = captionFor(srcImg);
+      captionEl.hidden = !captionEl.textContent;
+      const many = list.length > 1;
+      if (prevBtn instanceof HTMLElement) prevBtn.hidden = !many;
+      if (nextBtn instanceof HTMLElement) nextBtn.hidden = !many;
+      if (nudge && !reduce.matches) {
+        imgEl.classList.remove("is-nudge-prev", "is-nudge-next");
+        void imgEl.offsetWidth;
+        imgEl.classList.add(nudge);
+      }
+    };
+
+    const openAt = (i) => {
+      show(i);
+      if (!dialog.open) dialog.showModal();
+    };
+
+    const close = () => {
+      if (dialog.open) dialog.close();
+    };
+
+    document.querySelector(".prose")?.addEventListener("click", (event) => {
+      const t = event.target;
+      if (!(t instanceof HTMLImageElement)) return;
+      if (!t.matches(".journal-figure img, .pair img")) return;
+      event.preventDefault();
+      const list = items();
+      const i = list.indexOf(t);
+      if (i >= 0) openAt(i);
+    });
+
+    closeBtn?.addEventListener("click", close);
+    prevBtn?.addEventListener("click", () => show(index - 1, "is-nudge-prev"));
+    nextBtn?.addEventListener("click", () => show(index + 1, "is-nudge-next"));
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) close();
+    });
+
+    dialog.addEventListener("keydown", (event) => {
+      if (!dialog.open) return;
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        show(index - 1, "is-nudge-prev");
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        show(index + 1, "is-nudge-next");
+      }
+    });
+
+    let touchX = null;
+    dialog.addEventListener("touchstart", (event) => {
+      touchX = event.changedTouches[0]?.clientX ?? null;
+    }, { passive: true });
+    dialog.addEventListener("touchend", (event) => {
+      if (touchX == null) return;
+      const x = event.changedTouches[0]?.clientX ?? touchX;
+      const dx = x - touchX;
+      touchX = null;
+      if (Math.abs(dx) < 40) return;
+      if (dx > 0) show(index - 1, "is-nudge-prev");
+      else show(index + 1, "is-nudge-next");
+    }, { passive: true });
+  }
+</script>
+
+<style>
+  .lightbox {
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: var(--space-l) var(--gutter);
+    border: 0;
+    background: var(--lightbox-scrim);
+    color: var(--lightbox-ink);
+  }
+
+  .lightbox[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox::backdrop {
+    background: transparent;
+  }
+
+  .lightbox[open] {
+    animation: lightbox-scrim var(--duration) var(--ease);
+  }
+
+  .lightbox[open] .lightbox-photo img {
+    animation: lightbox-in var(--duration) var(--ease);
+  }
+
+  .lightbox-close,
+  .lightbox-prev,
+  .lightbox-next {
+    box-sizing: border-box;
+    width: var(--lightbox-control);
+    height: var(--lightbox-control);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--lightbox-ink);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: var(--space-m);
+    right: var(--space-m);
+    color: var(--lightbox-accent);
+    z-index: 2;
+  }
+
+  .lightbox-close svg,
+  .lightbox-prev svg,
+  .lightbox-next svg {
+    display: block;
+  }
+
+  .lightbox-close path,
+  .lightbox-prev path,
+  .lightbox-next path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--lightbox-stroke);
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
+  .lightbox-prev:hover,
+  .lightbox-next:hover,
+  .lightbox-prev:focus-visible,
+  .lightbox-next:focus-visible {
+    color: var(--lightbox-accent);
+  }
+
+  .lightbox-frame {
+    margin: 0;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-photo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  .lightbox-photo img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 7rem);
+    object-fit: contain;
+  }
+
+  .lightbox-photo img.is-nudge-next {
+    animation: lightbox-nudge-next var(--duration) var(--ease);
+  }
+
+  .lightbox-photo img.is-nudge-prev {
+    animation: lightbox-nudge-prev var(--duration) var(--ease);
+  }
+
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .lightbox-prev {
+    left: 0;
+  }
+
+  .lightbox-next {
+    right: 0;
+  }
+
+  .lightbox-caption {
+    margin-top: var(--space-xs);
+    max-width: var(--measure);
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: var(--step-small);
+    line-height: var(--leading-snug);
+    color: var(--lightbox-muted);
+  }
+
+  @keyframes lightbox-scrim {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes lightbox-in {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes lightbox-nudge-next {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes lightbox-nudge-prev {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox[open],
+    .lightbox[open] .lightbox-photo img,
+    .lightbox-photo img.is-nudge-next,
+    .lightbox-photo img.is-nudge-prev {
+      animation: none;
+    }
+  }
+</style>

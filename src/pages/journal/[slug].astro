@@ -5,6 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import Figure from "../../components/journal/Figure.astro";
 import Pair from "../../components/journal/Pair.astro";
+import Lightbox from "../../components/journal/Lightbox.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("journal");
@@ -59,6 +60,7 @@ const kicker = post.data.archive
     </div>
   </article>
   <CtaBand />
+  <Lightbox />
 </Layout>
 
 <style>

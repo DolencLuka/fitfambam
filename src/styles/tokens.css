@@ -157,6 +157,14 @@
   /* Article hero: max height on desktop so the essay starts on the first screen.
      Portraits shrink to this; landscapes also hit it. Never a 16/8 cover crop. */
   --hero-max: 70vh;
+
+  /* In-body lightbox (Figure/Pair only; hero stays inert). Mariah restyles here. */
+  --lightbox-scrim: color-mix(in srgb, var(--color-forest) 92%, transparent);
+  --lightbox-ink: var(--color-ink-inverse);
+  --lightbox-muted: color-mix(in srgb, var(--color-ink-inverse) 70%, transparent);
+  --lightbox-accent: var(--color-accent);
+  --lightbox-control: 2.75rem;
+  --lightbox-stroke: 1.5px;
 }
 
 @media (prefers-reduced-motion: reduce) {
