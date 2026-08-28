@@ -72,6 +72,7 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
         if (name instanceof HTMLAnchorElement) {
           name.href = row.link;
           name.rel = "nofollow noopener noreferrer";
+          name.target = "_blank";
         }
         const time = document.createElement("time");
         time.dateTime = row.created_at;
@@ -160,8 +161,13 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
   }
 
   :global(a.comments-name) {
-    color: inherit;
+    color: var(--color-accent-dark);
     text-decoration: none;
+  }
+
+  :global(a.comments-name:hover),
+  :global(a.comments-name:focus-visible) {
+    text-decoration: underline;
   }
 
   :global(.comments-list time) {
