@@ -17,6 +17,10 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
         <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="80" />
       </label>
       <label>
+        A link
+        <input type="url" name="link" autocomplete="url" maxlength="200" />
+      </label>
+      <label>
         A note
         <textarea name="body" rows="5" required minlength="8" maxlength="1500"></textarea>
       </label>
@@ -62,9 +66,13 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
         const li = document.createElement("li");
         const meta = document.createElement("div");
         meta.className = "comments-meta";
-        const name = document.createElement("span");
+        const name = row.link ? document.createElement("a") : document.createElement("span");
         name.className = "comments-name";
         name.textContent = row.name;
+        if (name instanceof HTMLAnchorElement) {
+          name.href = row.link;
+          name.rel = "nofollow noopener noreferrer";
+        }
         const time = document.createElement("time");
         time.dateTime = row.created_at;
         time.textContent = formatDate(row.created_at);
@@ -90,6 +98,7 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
           slug,
           name: data.get("name"),
           body: data.get("body"),
+          link: data.get("link"),
           website: data.get("website"),
           "cf-turnstile-response": token || "",
         }),
@@ -148,6 +157,11 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
     font-family: var(--font-body);
     font-size: var(--step-small);
     color: var(--color-ink);
+  }
+
+  :global(a.comments-name) {
+    color: inherit;
+    text-decoration: none;
   }
 
   :global(.comments-list time) {

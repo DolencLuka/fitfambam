@@ -18,6 +18,7 @@ type PublicComment = {
   name: string;
   body: string;
   created_at: string;
+  link: string | null;
 };
 
 export async function onRequestGet(context: PagesContext<Env>): Promise<Response> {
@@ -28,7 +29,7 @@ export async function onRequestGet(context: PagesContext<Env>): Promise<Response
     }
 
     const { results } = await context.env.DB.prepare(
-      "SELECT id, name, body, created_at FROM comments WHERE slug = ? AND status = 'approved' ORDER BY created_at ASC",
+      "SELECT id, name, body, created_at, link FROM comments WHERE slug = ? AND status = 'approved' ORDER BY created_at ASC",
     )
       .bind(slug)
       .all<PublicComment>();
@@ -56,6 +57,22 @@ export async function onRequestPost(context: PagesContext<Env>): Promise<Respons
     const slug = plainText(body.slug).toLowerCase();
     const name = plainText(body.name);
     const text = plainText(body.body);
+    const linkRaw = typeof body.link === "string" ? body.link.trim() : "";
+    let link: string | null = null;
+    if (linkRaw) {
+      try {
+        const parsed = new URL(linkRaw);
+        if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+          return jsonError("Link must be a web address.", 400);
+        }
+        if (linkRaw.length > 200) {
+          return jsonError("Link is too long.", 400);
+        }
+        link = parsed.href;
+      } catch {
+        return jsonError("Link must be a web address.", 400);
+      }
+    }
 
     if (!isJournalSlug(slug)) {
       return jsonError("Invalid slug.", 400);
@@ -99,9 +116,9 @@ export async function onRequestPost(context: PagesContext<Env>): Promise<Respons
     const createdAt = new Date().toISOString();
 
     await context.env.DB.prepare(
-      "INSERT INTO comments (id, slug, name, body, created_at, status, ip_hash) VALUES (?, ?, ?, ?, ?, 'pending', ?)",
+      "INSERT INTO comments (id, slug, name, body, created_at, status, ip_hash, link) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?)",
     )
-      .bind(id, slug, name, text, createdAt, ipHash)
+      .bind(id, slug, name, text, createdAt, ipHash, link)
       .run();
 
     return json({ ok: true }, 201);
