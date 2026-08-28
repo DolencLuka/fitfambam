@@ -8,8 +8,5 @@ CREATE TABLE IF NOT EXISTS comments (
   ip_hash TEXT NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS idx_comments_slug_status_created
-  ON comments (slug, status, created_at);
-
-CREATE INDEX IF NOT EXISTS idx_comments_ip_hash_created
-  ON comments (ip_hash, created_at);
+CREATE INDEX IF NOT EXISTS comments_slug_status_created ON comments (slug, status, created_at);
+CREATE INDEX IF NOT EXISTS comments_ip_created ON comments (ip_hash, created_at);
