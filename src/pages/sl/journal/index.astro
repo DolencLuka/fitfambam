@@ -12,6 +12,8 @@ const posts = (await getCollection("journal")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const { photographs, archive } = splitJournal(posts);
+const archiveCards = archive.filter((post) => post.data.hero);
+const archivePlain = archive.filter((post) => !post.data.hero);
 ---
 
 <Layout
@@ -40,9 +42,20 @@ const { photographs, archive } = splitJournal(posts);
     <div class="wrap head">
       <h2 id="archive-heading" class="kicker">{t.archiveKicker}</h2>
     </div>
-    <div class="wrap">
-      <ArchiveList posts={archive} locale="sl" />
-    </div>
+    {
+      archiveCards.length > 0 && (
+        <div class="wrap-wide cards">
+          {archiveCards.map((post) => <PostCard post={post} locale="sl" />)}
+        </div>
+      )
+    }
+    {
+      archivePlain.length > 0 && (
+        <div class="wrap">
+          <ArchiveList posts={archivePlain} locale="sl" />
+        </div>
+      )
+    }
   </section>
 
   <CtaBand locale="sl" />

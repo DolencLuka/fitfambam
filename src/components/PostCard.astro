@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { copy, localeFromPath, type Locale } from "../lib/i18n";
+import { isDesignedHero } from "../lib/journal";
 
 interface Props {
   post: CollectionEntry<"journal">;
@@ -19,14 +20,16 @@ const date = post.data.pubDate.toLocaleDateString("en-GB", {
 const kicker = post.data.archive ? t.archiveKicker : post.data.tags[0];
 const hero = post.data.hero;
 const hasHero = Boolean(hero);
-const isPortrait = Boolean(hero && hero.height > hero.width);
+const isDesigned = isDesignedHero(post);
+const isPortrait = Boolean(hero && !isDesigned && hero.height > hero.width);
 ---
 
+<!-- Designed empty-archive still: one shared 4:3 drawing. Cover/center, bottom-only veil, live title overlay. Photos keep the existing veil. Do not duplicate this file per post. -->
 <article class:list={["card", hasHero ? "card-photo" : "card-type"]}>
   <a href={`/journal/${post.id}`}>
     {
       hasHero && post.data.hero ? (
-        <div class:list={["media", isPortrait && "is-portrait"]}>
+        <div class:list={["media", isPortrait && "is-portrait", isDesigned && "is-designed"]}>
           <Image
             src={post.data.hero}
             alt={post.data.heroAlt ?? ""}
@@ -86,6 +89,15 @@ const isPortrait = Boolean(hero && hero.height > hero.width);
     object-position: top;
   }
 
+  .media.is-designed {
+    background: var(--designed-field);
+  }
+
+  .media.is-designed :global(img) {
+    object-fit: cover;
+    object-position: center;
+  }
+
   .veil,
   .type {
     display: flex;
@@ -99,6 +111,10 @@ const isPortrait = Boolean(hero && hero.height > hero.width);
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgb(10 10 10 / 0.05) 20%, rgb(10 10 10 / 0.72) 100%);
+  }
+
+  .media.is-designed .veil {
+    background: linear-gradient(180deg, #0000 45%, #0a0a0acc);
   }
 
   .type {
@@ -150,6 +166,10 @@ const isPortrait = Boolean(hero && hero.height > hero.width);
 
   .card-photo:hover .media :global(img) {
     transform: scale(1.05);
+  }
+
+  .card-photo:hover .media.is-designed :global(img) {
+    transform: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
