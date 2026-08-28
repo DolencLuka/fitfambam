@@ -21,6 +21,15 @@ type PublicComment = {
   link: string | null;
 };
 
+const PROFILE_HOSTS = ["instagram.com", "facebook.com", "fb.com", "tiktok.com", "youtube.com", "youtu.be"];
+
+function isProfileLink(parsed: URL): boolean {
+  const host = parsed.hostname.toLowerCase().replace(/^(www|m|vm)\./, "");
+  if (host === "fitfambam.com" || host.endsWith(".fitfambam.com")) return false;
+  return PROFILE_HOSTS.some((allowed) => host === allowed || host.endsWith("." + allowed));
+}
+
+
 export async function onRequestGet(context: PagesContext<Env>): Promise<Response> {
   try {
     const slug = new URL(context.request.url).searchParams.get("slug") || "";
@@ -34,7 +43,17 @@ export async function onRequestGet(context: PagesContext<Env>): Promise<Response
       .bind(slug)
       .all<PublicComment>();
 
-    return json(results ?? []);
+    const rows = (results ?? []).map((row) => {
+      if (!row.link) return row;
+      try {
+        const parsed = new URL(row.link);
+        if (!isProfileLink(parsed)) return { ...row, link: null };
+      } catch {
+        return { ...row, link: null };
+      }
+      return row;
+    });
+    return json(rows);
   } catch {
     return jsonError("Could not load comments.", 500);
   }
@@ -60,17 +79,20 @@ export async function onRequestPost(context: PagesContext<Env>): Promise<Respons
     const linkRaw = typeof body.link === "string" ? body.link.trim() : "";
     let link: string | null = null;
     if (linkRaw) {
+      if (linkRaw.length > 200) {
+        return jsonError("Link is too long.", 400);
+      }
       try {
         const parsed = new URL(linkRaw);
         if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-          return jsonError("Link must be a web address.", 400);
+          return jsonError("Link must be Instagram, Facebook, TikTok, or YouTube.", 400);
         }
-        if (linkRaw.length > 200) {
-          return jsonError("Link is too long.", 400);
+        if (!isProfileLink(parsed)) {
+          return jsonError("Link must be Instagram, Facebook, TikTok, or YouTube.", 400);
         }
         link = parsed.href;
       } catch {
-        return jsonError("Link must be a web address.", 400);
+        return jsonError("Link must be Instagram, Facebook, TikTok, or YouTube.", 400);
       }
     }
 
