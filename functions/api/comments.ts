@@ -104,7 +104,7 @@ export async function onRequestPost(context: PagesContext<Env>): Promise<Respons
       .bind(id, slug, name, text, createdAt, ipHash)
       .run();
 
-    return json({ ok: true, message: "Thanks. It will show after it's approved." }, 201);
+    return json({ ok: true }, 201);
   } catch {
     return jsonError("Could not save comment.", 500);
   }
