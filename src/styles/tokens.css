@@ -69,7 +69,7 @@
   --color-ink-inverse: #f6f5f2;
 
   /* designed empty-archive card field (paper-charcoal) and mark. Mariah restyles here. */
-  --designed-field: color-mix(in srgb, var(--color-forest) 88%, var(--color-paper));
+  --designed-field: color-mix(in srgb, var(--color-forest) 62%, var(--color-paper));
   --designed-mark: var(--color-accent);
 
   /* Overlay: scrim over full-bleed photos so thin white type stays readable. */

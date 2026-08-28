@@ -38,6 +38,8 @@ const archivePlain = archive.filter((post) => !post.data.hero);
     </div>
   </section>
 
+  {
+    (archiveCards.length > 0 || archivePlain.length > 0) && (
   <section class="writing" aria-labelledby="archive-heading">
     <div class="wrap head">
       <h2 id="archive-heading" class="kicker">{t.archiveKicker}</h2>
@@ -57,6 +59,8 @@ const archivePlain = archive.filter((post) => !post.data.hero);
       )
     }
   </section>
+    )
+  }
 
   <CtaBand locale="sl" />
 </Layout>

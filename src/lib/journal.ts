@@ -30,7 +30,7 @@ export function splitJournal(posts: JournalPost[]): {
   const photographs: JournalPost[] = [];
   const archive: JournalPost[] = [];
   for (const post of posts) {
-    if (isOriginalPhotoPost(post)) photographs.push(post);
+    if (isOriginalPhotoPost(post) || isDesignedHero(post)) photographs.push(post);
     else archive.push(post);
   }
   return { photographs, archive };
