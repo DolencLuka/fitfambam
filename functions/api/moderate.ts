@@ -6,6 +6,7 @@ import {
   authorizeModerate,
   plainText,
 } from "../_lib/util";
+import { journalPath, journalTitle } from "../_lib/journal-titles";
 
 type QueueRow = {
   id: string;
@@ -34,7 +35,12 @@ export async function onRequestGet(context: PagesContext<Env>): Promise<Response
       .bind(statusParam)
       .all<QueueRow>();
 
-    return json(results ?? []);
+    const rows = (results ?? []).map((row) => ({
+      ...row,
+      title: journalTitle(row.slug),
+      href: journalPath(row.slug),
+    }));
+    return json(rows);
   } catch {
     return jsonError("Could not list comments.", 500);
   }

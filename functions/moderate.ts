@@ -1,4 +1,5 @@
 import { type Env, type PagesContext, authorizeModerate } from "./_lib/util";
+import { journalPath, journalTitle } from "./_lib/journal-titles";
 
 type QueueRow = {
   id: string;
@@ -31,31 +32,55 @@ export async function onRequestGet(context: PagesContext<Env>): Promise<Response
       return unauthorized;
     }
 
+    const pageUrl = new URL(context.request.url);
+    const token = pageUrl.searchParams.get("token") || "";
+    const statusParam = pageUrl.searchParams.get("status") || "pending";
+    const status = statusParam === "approved" || statusParam === "rejected" ? statusParam : "pending";
+
     const { results } = await context.env.DB.prepare(
-      "SELECT id, slug, name, body, created_at FROM comments WHERE status = 'pending' ORDER BY created_at ASC",
-    ).all<QueueRow>();
+      "SELECT id, slug, name, body, created_at FROM comments WHERE status = ? ORDER BY created_at ASC",
+    )
+      .bind(status)
+      .all<QueueRow>();
 
     const rows = results ?? [];
     const items = rows.length
       ? rows
           .map((row) => {
             const when = escapeHtml(row.created_at);
-            const slug = escapeHtml(row.slug);
+            const title = escapeHtml(journalTitle(row.slug));
+            const href = escapeHtml(journalPath(row.slug));
             const name = escapeHtml(row.name);
             const body = escapeHtml(row.body);
             const id = escapeHtml(row.id);
-            return `<article class="card" data-id="${id}">
-  <p class="meta"><span>${when}</span><span>${slug}</span></p>
-  <p class="name">${name}</p>
-  <p class="body">${body}</p>
-  <p class="actions">
+            const actions =
+              status === "pending"
+                ? `<p class="actions">
     <button type="button" data-action="approve" data-id="${id}">Approve</button>
     <button type="button" class="ghost" data-action="reject" data-id="${id}">Reject</button>
-  </p>
+  </p>`
+                : "";
+            return `<article class="card" data-id="${id}">
+  <p class="post"><a href="${href}">${title}</a></p>
+  <p class="meta"><span>${when}</span></p>
+  <p class="name">${name}</p>
+  <p class="body">${body}</p>
+  ${actions}
 </article>`;
           })
           .join("\n")
-      : `<p class="empty">Nothing waiting.</p>`;
+      : `<p class="empty">${status === "pending" ? "Nothing waiting." : status === "approved" ? "No approved notes." : "No rejected notes."}</p>`;
+
+    const nav = (["pending", "approved", "rejected"] as const)
+      .map((key) => {
+        const label = key[0].toUpperCase() + key.slice(1);
+        const href = `/moderate?token=${encodeURIComponent(token)}&status=${key}`;
+        return key === status
+          ? `<span class="current">${label}</span>`
+          : `<a href="${escapeHtml(href)}">${label}</a>`;
+      })
+      .join("");
+    const heading = status[0].toUpperCase() + status.slice(1);
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -99,6 +124,20 @@ export async function onRequestGet(context: PagesContext<Env>): Promise<Response
       padding: 1.1rem 1.15rem;
       margin-bottom: 0.75rem;
     }
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin: 0 0 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .tabs a { color: var(--muted); text-decoration: none; }
+    .tabs a:hover { color: var(--ink); }
+    .tabs .current { color: var(--ink); }
+    .post { margin: 0 0 0.35rem; }
+    .post a { color: var(--accent); text-decoration: none; }
+    .post a:hover { text-decoration: underline; }
     .meta {
       display: flex;
       gap: 1rem;
@@ -131,7 +170,8 @@ export async function onRequestGet(context: PagesContext<Env>): Promise<Response
 </head>
 <body>
   <main>
-    <h1>Pending</h1>
+    <h1>${heading}</h1>
+    <p class="tabs">${nav}</p>
     <p class="status" data-status></p>
     <div data-queue>
       ${items}
