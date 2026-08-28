@@ -122,40 +122,41 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
     min-width: 0;
   }
 
-  .comments-list {
+  :global(.comments-list) {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .comments-list li {
+  :global(.comments-list li) {
     padding-block: var(--space-l);
     border-bottom: 1px solid var(--color-line);
+    list-style: none;
   }
 
-  .comments-list li:last-child {
+  :global(.comments-list li:last-child) {
     border-bottom: none;
   }
 
-  .comments-meta {
+  :global(.comments-meta) {
     display: flex;
     gap: var(--space-m);
     align-items: baseline;
   }
 
-  .comments-name {
+  :global(.comments-name) {
     font-family: var(--font-body);
     font-size: var(--step-small);
     color: var(--color-ink);
   }
 
-  .comments-list time {
+  :global(.comments-list time) {
     font-family: var(--font-body);
     font-size: var(--step-micro);
     color: var(--color-muted);
   }
 
-  .comments-body {
+  :global(.comments-body) {
     margin: var(--space-xs) 0 0;
     font-family: var(--font-body);
     font-size: var(--step-body);
