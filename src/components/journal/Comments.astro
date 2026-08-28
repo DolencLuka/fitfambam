@@ -4,162 +4,156 @@ interface Props {
 }
 
 const { slug } = Astro.props;
-const siteKey = "0x4AAAAAAEfGY3WAkhzOXjc_";
+const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
 ---
 
 <!-- Journal notes. Paper field, hairline, live type. No avatars. Approved only. Tokens from :root. -->
-<section class="comments" data-slug={slug}>
-  <form class="comments-form">
-    <label class="hp">
-      Website
-      <input type="text" name="website" tabindex="-1" autocomplete="off" />
-    </label>
-    <label>
-      Name
-      <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="80" />
-    </label>
-    <label>
-      A note
-      <textarea name="body" rows="5" required minlength="8" maxlength="1500"></textarea>
-    </label>
-    <button class="btn btn-primary" type="submit">Send</button>
-    <div class="cf-turnstile" data-sitekey={siteKey} data-appearance="interaction-only"></div>
-  </form>
-  <p class="comments-thanks" hidden>Thanks. It will show once it’s been read.</p>
+<section class="comments" data-comments data-slug={slug}>
+  <div class="comments-inner">
+    <ol class="comments-list" hidden></ol>
+    <form class="comments-form">
+      <label>
+        Name
+        <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="80" />
+      </label>
+      <label>
+        A note
+        <textarea name="body" rows="5" required minlength="8" maxlength="1500"></textarea>
+      </label>
+      <label class="hp" aria-hidden="true">
+        Website
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </label>
+      <button class="btn btn-primary" type="submit">Send</button>
+      <div class="cf-turnstile" data-sitekey={sitekey} data-size="invisible"></div>
+    </form>
+    <p class="comments-thanks" hidden>Thanks. It will show once it’s been read.</p>
+  </div>
 </section>
 
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
-  const host = document.querySelector("section.comments[data-slug]");
-  if (host instanceof HTMLElement) {
-    const slug = host.dataset.slug ?? "";
-    const form = host.querySelector(".comments-form");
-    const thanks = host.querySelector(".comments-thanks");
+  const root = document.querySelector("[data-comments]");
+  if (root) {
+    const slug = root.getAttribute("data-slug") || "";
+    const list = root.querySelector(".comments-list");
+    const form = root.querySelector(".comments-form");
+    const thanks = root.querySelector(".comments-thanks");
 
-    const fmt = (iso) => {
+    function formatDate(iso) {
       const d = new Date(iso);
-      if (Number.isNaN(d.getTime())) return "";
       return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-    };
+    }
 
-    const renderList = (items) => {
-      host.querySelector(".comments-list")?.remove();
-      host.classList.remove("has-list");
-      if (!items.length) return;
-      const ol = document.createElement("ol");
-      ol.className = "comments-list";
-      for (const item of items) {
+    async function load() {
+      const res = await fetch("/api/comments?slug=" + encodeURIComponent(slug));
+      if (!res.ok) return;
+      const rows = await res.json();
+      if (!Array.isArray(rows) || !rows.length) {
+        list.hidden = true;
+        list.innerHTML = "";
+        form.classList.remove("has-list");
+        return;
+      }
+      list.hidden = false;
+      form.classList.add("has-list");
+      list.replaceChildren();
+      for (const row of rows) {
         const li = document.createElement("li");
-        const head = document.createElement("div");
-        head.className = "comments-head";
+        const meta = document.createElement("div");
+        meta.className = "comments-meta";
         const name = document.createElement("span");
         name.className = "comments-name";
-        name.textContent = item.name;
+        name.textContent = row.name;
         const time = document.createElement("time");
-        time.dateTime = item.created_at;
-        time.textContent = fmt(item.created_at);
-        head.append(name, time);
+        time.dateTime = row.created_at;
+        time.textContent = formatDate(row.created_at);
         const body = document.createElement("p");
         body.className = "comments-body";
-        body.textContent = item.body;
-        li.append(head, body);
-        ol.append(li);
+        body.textContent = row.body;
+        meta.append(name, time);
+        li.append(meta, body);
+        list.append(li);
       }
-      if (form) host.insertBefore(ol, form);
-      else host.prepend(ol);
-      host.classList.add("has-list");
-    };
+    }
 
-    fetch("/api/comments?slug=" + encodeURIComponent(slug), { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : []))
-      .then((data) => {
-        if (Array.isArray(data)) renderList(data);
-      })
-      .catch(() => {});
-
-    form?.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!(form instanceof HTMLFormElement) || form.dataset.busy) return;
-      form.dataset.busy = "1";
-      const submit = form.querySelector('button[type="submit"]');
-      if (submit instanceof HTMLButtonElement) submit.disabled = true;
-
       const data = new FormData(form);
-      const tokenEl = form.querySelector('[name="cf-turnstile-response"]');
-      const token = tokenEl instanceof HTMLInputElement ? tokenEl.value : "";
-
-      try {
-        const res = await fetch("/api/comments", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            slug,
-            name: String(data.get("name") ?? ""),
-            body: String(data.get("body") ?? ""),
-            website: String(data.get("website") ?? ""),
-            "cf-turnstile-response": token,
-          }),
-        });
-
-        if (res.status === 201 || res.status === 204) {
-          form.hidden = true;
-          if (thanks instanceof HTMLElement) thanks.hidden = false;
-          return;
-        }
-      } catch {
-        /* stay on the form */
+      const tokenEl = form.querySelector("[name='cf-turnstile-response']");
+      let token = tokenEl ? tokenEl.value : "";
+      if (!token && window.turnstile) token = window.turnstile.getResponse();
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          slug,
+          name: data.get("name"),
+          body: data.get("body"),
+          website: data.get("website"),
+          "cf-turnstile-response": token || "",
+        }),
+      });
+      if (res.ok || res.status === 204) {
+        form.hidden = true;
+        thanks.hidden = false;
+        if (window.turnstile) window.turnstile.reset();
       }
-
-      form.dataset.busy = "";
-      if (submit instanceof HTMLButtonElement) submit.disabled = false;
-      const w = window as unknown as { turnstile?: { reset: () => void } };
-      w.turnstile?.reset();
     });
+
+    load();
   }
 </script>
 
 <style>
   .comments {
-    width: min(var(--measure), calc(100% - var(--gutter) * 2));
-    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr min(var(--measure), calc(100% - var(--gutter) * 2)) 1fr;
     margin-block: var(--space-2xl) var(--space-3xl);
     border-top: 1px solid var(--color-line);
     padding-top: var(--space-xl);
+    background: var(--color-paper);
   }
 
-  .comments :global(.comments-list) {
+  .comments-inner {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .comments-list {
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .comments :global(.comments-list li) {
+  .comments-list li {
     padding-block: var(--space-l);
+    border-bottom: 1px solid var(--color-line);
   }
 
-  .comments :global(.comments-list li + li) {
-    border-top: 1px solid var(--color-line);
+  .comments-list li:last-child {
+    border-bottom: none;
   }
 
-  .comments :global(.comments-head) {
+  .comments-meta {
     display: flex;
     gap: var(--space-m);
     align-items: baseline;
   }
 
-  .comments :global(.comments-name) {
+  .comments-name {
     font-family: var(--font-body);
     font-size: var(--step-small);
     color: var(--color-ink);
   }
 
-  .comments :global(.comments-list time) {
+  .comments-list time {
     font-family: var(--font-body);
     font-size: var(--step-micro);
     color: var(--color-muted);
   }
 
-  .comments :global(.comments-body) {
+  .comments-body {
     margin: var(--space-xs) 0 0;
     font-family: var(--font-body);
     font-size: var(--step-body);
@@ -171,12 +165,9 @@ const siteKey = "0x4AAAAAAEfGY3WAkhzOXjc_";
     display: grid;
     gap: var(--space-m);
     margin-top: 0;
-    background: transparent;
-    border: 0;
-    padding: 0;
   }
 
-  .has-list .comments-form {
+  .comments-form.has-list {
     margin-top: var(--space-xl);
   }
 
@@ -222,30 +213,23 @@ const siteKey = "0x4AAAAAAEfGY3WAkhzOXjc_";
   @media (width <= 860px) {
     .comments-form .btn {
       width: auto;
-      justify-self: start;
     }
   }
 
   .hp {
     position: absolute;
+    left: -10000px;
     width: 1px;
     height: 1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    white-space: nowrap;
   }
 
   .comments-thanks {
+    margin: 0;
     font-family: var(--font-body);
     font-size: var(--step-small);
     color: var(--color-muted);
-    margin: 0;
     animation: comments-in var(--duration) var(--ease);
-  }
-
-  .comments-thanks[hidden] {
-    display: none;
   }
 
   @keyframes comments-in {
