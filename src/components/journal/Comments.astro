@@ -96,7 +96,9 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
       });
       if (res.ok || res.status === 204) {
         form.hidden = true;
+        form.style.display = "none";
         thanks.hidden = false;
+        thanks.style.display = "";
         if (window.turnstile) window.turnstile.reset();
       }
     });
@@ -248,4 +250,9 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
       animation: none;
     }
   }
+</style>
+
+<style is:global>
+  .comments-form[hidden] { display: none !important; }
+  .comments-thanks[hidden] { display: none; }
 </style>
