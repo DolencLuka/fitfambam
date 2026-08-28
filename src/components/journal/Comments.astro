@@ -232,6 +232,11 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
     animation: comments-in var(--duration) var(--ease);
   }
 
+  .comments-form[hidden],
+  .comments-thanks[hidden] {
+    display: none;
+  }
+
   @keyframes comments-in {
     from { opacity: 0; }
     to { opacity: 1; }
