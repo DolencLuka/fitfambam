@@ -161,7 +161,7 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
     color: var(--color-ink);
   }
 
-  .comments-form {
+  .comments-form:not([hidden]) {
     display: grid;
     gap: var(--space-m);
     margin-top: 0;
@@ -232,8 +232,9 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
     animation: comments-in var(--duration) var(--ease);
   }
 
-  .comments-form[hidden],
-  .comments-thanks[hidden] {
+  /* thanks replaces form — must beat display:grid */
+  :global(.comments-form[hidden]),
+  :global(.comments-thanks[hidden]) {
     display: none;
   }
 
