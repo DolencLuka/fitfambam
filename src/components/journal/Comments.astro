@@ -16,6 +16,7 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
         Name
         <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="80" />
       </label>
+      <!-- Optional profile URL. Name becomes the link. Not the Website honeypot. -->
       <label>
         A link
         <input type="url" name="link" autocomplete="url" maxlength="200" />
@@ -132,58 +133,6 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
     min-width: 0;
   }
 
-  :global(.comments-list) {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  :global(.comments-list li) {
-    padding-block: var(--space-l);
-    border-bottom: 1px solid var(--color-line);
-    list-style: none;
-  }
-
-  :global(.comments-list li:last-child) {
-    border-bottom: none;
-  }
-
-  :global(.comments-meta) {
-    display: flex;
-    gap: var(--space-m);
-    align-items: baseline;
-  }
-
-  :global(.comments-name) {
-    font-family: var(--font-body);
-    font-size: var(--step-small);
-    color: var(--color-ink);
-  }
-
-  :global(a.comments-name) {
-    color: var(--color-accent-dark);
-    text-decoration: none;
-  }
-
-  :global(a.comments-name:hover),
-  :global(a.comments-name:focus-visible) {
-    text-decoration: underline;
-  }
-
-  :global(.comments-list time) {
-    font-family: var(--font-body);
-    font-size: var(--step-micro);
-    color: var(--color-muted);
-  }
-
-  :global(.comments-body) {
-    margin: var(--space-xs) 0 0;
-    font-family: var(--font-body);
-    font-size: var(--step-body);
-    line-height: var(--leading-body);
-    color: var(--color-ink);
-  }
-
   .comments-form:not([hidden]) {
     display: grid;
     gap: var(--space-m);
@@ -276,4 +225,56 @@ const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
 <style is:global>
   .comments-form[hidden] { display: none !important; }
   .comments-thanks[hidden] { display: none; }
+
+  .comments ol.comments-list {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  .comments .comments-list li {
+    list-style: none;
+    padding-block: var(--space-l);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .comments .comments-list li:last-child {
+    border-bottom: none;
+  }
+
+  .comments .comments-meta {
+    display: flex;
+    gap: var(--space-m);
+    align-items: baseline;
+  }
+
+  .comments .comments-name {
+    font-family: var(--font-body);
+    font-size: var(--step-small);
+    color: var(--color-ink);
+  }
+
+  .comments a.comments-name {
+    color: var(--color-accent-dark);
+    text-decoration: none;
+  }
+
+  .comments a.comments-name:hover,
+  .comments a.comments-name:focus-visible {
+    text-decoration: underline;
+  }
+
+  .comments .comments-list time {
+    font-family: var(--font-body);
+    font-size: var(--step-micro);
+    color: var(--color-muted);
+  }
+
+  .comments .comments-body {
+    margin-top: var(--space-xs);
+    font-family: var(--font-body);
+    font-size: var(--step-body);
+    line-height: var(--leading-body);
+    color: var(--color-ink);
+  }
 </style>
