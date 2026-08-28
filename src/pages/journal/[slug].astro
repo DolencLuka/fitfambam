@@ -6,6 +6,7 @@ import CtaBand from "../../components/CtaBand.astro";
 import Figure from "../../components/journal/Figure.astro";
 import Pair from "../../components/journal/Pair.astro";
 import Lightbox from "../../components/journal/Lightbox.astro";
+import Comments from "../../components/journal/Comments.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("journal");
@@ -58,6 +59,7 @@ const kicker = post.data.archive
     <div class="prose body">
       <Content components={{ Figure, Pair }} />
     </div>
+    <Comments slug={post.id} />
   </article>
   <CtaBand />
   <Lightbox />
@@ -141,7 +143,7 @@ const kicker = post.data.archive
     display: grid;
     grid-template-columns: 1fr min(var(--measure), calc(100% - var(--gutter) * 2)) 1fr;
     max-width: none;
-    padding-bottom: var(--space-3xl);
+    padding-bottom: var(--space-2xl);
     font-size: 1.125rem;
   }
 

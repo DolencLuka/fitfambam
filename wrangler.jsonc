@@ -1,0 +1,15 @@
+{
+  "name": "fitfambam",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-08-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "fitfambam-comments",
+      "database_id": "4eec52e3-feeb-49df-9f69-563bc5edae0e"
+    }
+  ],
+  "vars": {
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAEfGY3WAkhzOXjc_"
+  }
+}

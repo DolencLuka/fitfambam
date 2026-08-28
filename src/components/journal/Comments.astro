@@ -1,0 +1,245 @@
+---
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const sitekey = "0x4AAAAAAEfGfasSA4-rLDC7";
+---
+
+<!-- Journal notes. Paper field, hairline, live type. No avatars. Approved only. Tokens from :root. -->
+<section class="comments" data-comments data-slug={slug}>
+  <div class="comments-inner">
+    <ol class="comments-list" hidden></ol>
+    <form class="comments-form">
+      <label>
+        Name
+        <input type="text" name="name" autocomplete="name" required minlength="2" maxlength="80" />
+      </label>
+      <label>
+        A note
+        <textarea name="body" rows="5" required minlength="8" maxlength="1500"></textarea>
+      </label>
+      <label class="hp" aria-hidden="true">
+        Website
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </label>
+      <button class="btn btn-primary" type="submit">Send</button>
+      <div class="cf-turnstile" data-sitekey={sitekey} data-size="invisible"></div>
+    </form>
+    <p class="comments-thanks" hidden>Thanks. It will show once it’s been read.</p>
+  </div>
+</section>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+  const root = document.querySelector("[data-comments]");
+  if (root) {
+    const slug = root.getAttribute("data-slug") || "";
+    const list = root.querySelector(".comments-list");
+    const form = root.querySelector(".comments-form");
+    const thanks = root.querySelector(".comments-thanks");
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    }
+
+    async function load() {
+      const res = await fetch("/api/comments?slug=" + encodeURIComponent(slug));
+      if (!res.ok) return;
+      const rows = await res.json();
+      if (!Array.isArray(rows) || !rows.length) {
+        list.hidden = true;
+        list.innerHTML = "";
+        form.classList.remove("has-list");
+        return;
+      }
+      list.hidden = false;
+      form.classList.add("has-list");
+      list.replaceChildren();
+      for (const row of rows) {
+        const li = document.createElement("li");
+        const meta = document.createElement("div");
+        meta.className = "comments-meta";
+        const name = document.createElement("span");
+        name.className = "comments-name";
+        name.textContent = row.name;
+        const time = document.createElement("time");
+        time.dateTime = row.created_at;
+        time.textContent = formatDate(row.created_at);
+        const body = document.createElement("p");
+        body.className = "comments-body";
+        body.textContent = row.body;
+        meta.append(name, time);
+        li.append(meta, body);
+        list.append(li);
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const tokenEl = form.querySelector("[name='cf-turnstile-response']");
+      let token = tokenEl ? tokenEl.value : "";
+      if (!token && window.turnstile) token = window.turnstile.getResponse();
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          slug,
+          name: data.get("name"),
+          body: data.get("body"),
+          website: data.get("website"),
+          "cf-turnstile-response": token || "",
+        }),
+      });
+      if (res.ok || res.status === 204) {
+        form.hidden = true;
+        thanks.hidden = false;
+        if (window.turnstile) window.turnstile.reset();
+      }
+    });
+
+    load();
+  }
+</script>
+
+<style>
+  .comments {
+    display: grid;
+    grid-template-columns: 1fr min(var(--measure), calc(100% - var(--gutter) * 2)) 1fr;
+    margin-block: var(--space-2xl) var(--space-3xl);
+    border-top: 1px solid var(--color-line);
+    padding-top: var(--space-xl);
+    background: var(--color-paper);
+  }
+
+  .comments-inner {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .comments-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .comments-list li {
+    padding-block: var(--space-l);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .comments-list li:last-child {
+    border-bottom: none;
+  }
+
+  .comments-meta {
+    display: flex;
+    gap: var(--space-m);
+    align-items: baseline;
+  }
+
+  .comments-name {
+    font-family: var(--font-body);
+    font-size: var(--step-small);
+    color: var(--color-ink);
+  }
+
+  .comments-list time {
+    font-family: var(--font-body);
+    font-size: var(--step-micro);
+    color: var(--color-muted);
+  }
+
+  .comments-body {
+    margin: var(--space-xs) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--step-body);
+    line-height: var(--leading-body);
+    color: var(--color-ink);
+  }
+
+  .comments-form {
+    display: grid;
+    gap: var(--space-m);
+    margin-top: 0;
+  }
+
+  .comments-form.has-list {
+    margin-top: var(--space-xl);
+  }
+
+  .comments-form label {
+    display: grid;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-size: var(--step-micro);
+    letter-spacing: var(--track-caps);
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  .comments-form input,
+  .comments-form textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: 0;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .comments-form textarea {
+    resize: vertical;
+  }
+
+  .comments-form input:focus-visible,
+  .comments-form textarea:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-color: var(--color-accent);
+  }
+
+  .comments-form .btn {
+    justify-self: start;
+  }
+
+  @media (width <= 860px) {
+    .comments-form .btn {
+      width: auto;
+    }
+  }
+
+  .hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .comments-thanks {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step-small);
+    color: var(--color-muted);
+    animation: comments-in var(--duration) var(--ease);
+  }
+
+  @keyframes comments-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .comments-thanks {
+      animation: none;
+    }
+  }
+</style>
