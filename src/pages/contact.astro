@@ -10,24 +10,25 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
   description="Write to FitFamBam. A real inbox. No fake form backend, no mailing list trap."
 >
   <div class="wrap layout">
-    <header>
-      <p class="kicker">Contact</p>
-      <h1>Say <span class="accent">hello.</span></h1>
-      <p class="lede">
-        No bot. We read mail at home. There are four children.
+    <div class="copy">
+      <header>
+        <p class="kicker">Contact</p>
+        <h1>Say <span class="accent">hello.</span></h1>
+        <p class="lede">
+          No bot. We read mail at home. There are four children.
+        </p>
+      </header>
+      <p class="write">
+        <a class="btn btn-primary" href={`mailto:${site.email}`}>Write {site.email}</a>
       </p>
-    </header>
+    </div>
 
     <figure>
       <Image src={writeImg} alt="A pier stretching into the sea" widths={[640, 1000]} sizes="(min-width: 800px) 40vw, 90vw" quality={70} format="webp" />
     </figure>
   </div>
 
-  <div class="wrap grid">
-    <p class="write">
-      <a class="btn btn-primary" href={`mailto:${site.email}`}>Write {site.email}</a>
-    </p>
-
+  <div class="wrap below">
     <aside>
       <h2>Privacy</h2>
       <p>
@@ -44,8 +45,13 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: clamp(1.5rem, 4vw, 4rem);
-    align-items: end;
-    padding: var(--space-3xl) 0 var(--space-xl);
+    align-items: center;
+    min-height: calc(100dvh - var(--header-h));
+    padding-block: var(--space-2xl);
+  }
+
+  .copy {
+    min-width: 0;
   }
 
   h1 {
@@ -53,27 +59,26 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
     margin: 0.3em 0 0.5em;
   }
 
+  .write {
+    margin: var(--space-l) 0 0;
+  }
+
   figure {
     margin: 0;
     overflow: hidden;
+    min-width: 0;
   }
 
   figure :global(img) {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
+    object-position: 50% 55%;
+    max-height: calc(100dvh - var(--header-h) - var(--space-2xl));
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: clamp(1.5rem, 4vw, 4rem);
+  .below {
     padding-bottom: var(--space-4xl);
-    align-items: start;
-  }
-
-  .write {
-    margin: 0;
   }
 
   aside h2 {
@@ -95,13 +100,29 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
   }
 
   @media (max-width: 800px) {
-    .layout,
-    .grid {
+    .layout {
       grid-template-columns: 1fr;
+      min-height: 0;
+      padding-block: var(--space-2xl);
+    }
+
+    .copy {
+      display: contents;
+    }
+
+    figure {
+      order: 2;
+    }
+
+    .write {
+      order: 3;
+      margin-top: var(--space-m);
     }
 
     figure :global(img) {
       aspect-ratio: 16 / 10;
+      max-height: 36vh;
+      object-position: 50% 55%;
     }
   }
 </style>
