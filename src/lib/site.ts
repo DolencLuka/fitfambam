@@ -1,7 +1,7 @@
 export const site = {
   name: "FitFamBam",
   url: "https://fitfambam.com",
-  email: "hello@fitfambam.com",
+  email: "fitfambam@gmail.com",
   locale: "en",
   owner: "Luka and Mariah Dolenc",
   place: "Slovenia",

@@ -14,7 +14,7 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
       <p class="kicker">Contact</p>
       <h1>Say <span class="accent">hello.</span></h1>
       <p class="lede">
-        There is no bot behind this page. The form opens your mail app. If that fails, write {site.email} yourself.
+        There is no bot behind this page. Write {site.email} when you want to talk.
       </p>
     </header>
 
@@ -24,30 +24,9 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
   </div>
 
   <div class="wrap grid">
-    <form class="form" action={`mailto:${site.email}`} method="get" enctype="text/plain">
-      <p class="notice">
-        This uses <strong>mailto</strong>. Nothing is stored on a server. A form backend can come later, without pretending now.
-      </p>
-
-      <label>
-        Your name
-        <input type="text" name="name" autocomplete="name" required />
-      </label>
-
-      <label>
-        Your email
-        <input type="email" name="email" autocomplete="email" required />
-      </label>
-
-      <label>
-        Message
-        <textarea name="body" rows="7" required placeholder="A note is enough."></textarea>
-      </label>
-
-      <input type="hidden" name="subject" value="Hello from FitFamBam.com" />
-
-      <button class="btn btn-primary" type="submit">Open email to {site.email}</button>
-    </form>
+    <p class="write">
+      <a class="btn btn-primary" href={`mailto:${site.email}`}>Write {site.email}</a>
+    </p>
 
     <aside>
       <h2>Privacy</h2>
@@ -56,10 +35,6 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
       </p>
       <h2>Where</h2>
       <p>Slovenia. Replies in English, and soon in Slovenian.</p>
-      <p class="alt">
-        Prefer a blank compose window?
-        <a href={`mailto:${site.email}`}>Email directly</a>.
-      </p>
     </aside>
   </div>
 </Layout>
@@ -94,52 +69,11 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
     grid-template-columns: 1.2fr 0.8fr;
     gap: clamp(1.5rem, 4vw, 4rem);
     padding-bottom: var(--space-4xl);
+    align-items: start;
   }
 
-  .form {
-    display: grid;
-    gap: var(--space-m);
-    background: var(--color-paper-raised);
-    border: 1px solid var(--color-line);
-    padding: var(--space-xl);
-  }
-
-  .notice {
+  .write {
     margin: 0;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid var(--color-line);
-    color: var(--color-ink);
-    font-size: var(--step-small);
-  }
-
-  label {
-    display: grid;
-    gap: 0.4rem;
-    font-family: var(--font-display);
-    font-size: var(--step-micro);
-    letter-spacing: var(--track-caps);
-    text-transform: uppercase;
-  }
-
-  input,
-  textarea {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--color-ink);
-    background: var(--color-paper);
-    border: 1px solid var(--color-line);
-    border-radius: 0;
-    padding: 0.75rem 0.85rem;
-  }
-
-  input:focus-visible,
-  textarea:focus-visible {
-    outline: 3px solid var(--color-focus);
-    outline-offset: 2px;
-    border-color: var(--color-accent);
   }
 
   aside h2 {
@@ -158,10 +92,6 @@ import writeImg from "../assets/from-wp/beach-pier.webp";
   aside p {
     color: var(--color-muted);
     margin: 0;
-  }
-
-  .alt {
-    margin-top: var(--space-l);
   }
 
   @media (max-width: 800px) {

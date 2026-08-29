@@ -1,6 +1,5 @@
 ---
 import { getImage } from "astro:assets";
-import { site } from "../lib/site";
 import { copy, localeFromPath, type Locale } from "../lib/i18n";
 import bandImg from "../assets/from-wp/beach-looking-out.webp";
 
@@ -28,7 +27,7 @@ const bg = await getImage({ src: bandImg, width: 1920, format: "webp", quality: 
   <div class="wrap">
     <h2>{title} <span class="accent">{accent}</span></h2>
     <p>{text}</p>
-    <a class="btn btn-ghost" href={`mailto:${site.email}`}>{t.cta.email.replace("{email}", site.email)}</a>
+    <a class="btn btn-ghost" href={locale === "sl" ? "/sl/contact" : "/contact"}>{t.cta.button}</a>
   </div>
 </section>
 

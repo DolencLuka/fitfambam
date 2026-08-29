@@ -69,7 +69,7 @@ const copyMap = {
       title: "Write when you want to",
       accent: "talk.",
       text: "No forms that pretend to send. No funnel. A real inbox, read at home.",
-      email: "Email {email}",
+      button: "Contact",
     },
     photos: {
       captions: ["Near home", "Luka and Mariah", "The kitchen board", "The pier", "Looking out"] as const,
@@ -115,7 +115,7 @@ const copyMap = {
       title: "Piši, kadar želiš",
       accent: "spregovoriti.",
       text: "Ni obrazcev, ki se pretvarjajo, da pošiljajo. Ni lijaka. Pravi predal, ki ga beremo doma.",
-      email: "Piši na {email}",
+      button: "Kontakt",
     },
     photos: {
       captions: ["Blizu doma", "Luka in Mariah", "Kuhinjska deska", "Pomol", "Pogled ven"] as const,

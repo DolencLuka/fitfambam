@@ -2,16 +2,12 @@
 import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import { site } from "../../lib/site";
-import { copy } from "../../lib/i18n";
 import writeImg from "../../assets/from-wp/beach-pier.webp";
-
-const t = copy("sl");
-const form = t.contact;
 ---
 
 <Layout
   title="Kontakt"
-  description={t.description}
+  description="Piši FitFamBam. Pravi predal. Ni lažnega obrazca, ni pasti za e-pošto."
   locale="sl"
 >
   <div class="wrap layout">
@@ -19,7 +15,7 @@ const form = t.contact;
       <p class="kicker">Kontakt</p>
       <h1>Reci <span class="accent">živjo.</span></h1>
       <p class="lede">
-        Za to stranjo ni bota. Obrazec odpre tvoj poštni program. Če ne gre, napiši {site.email} sam.
+        Za to stranjo ni bota. Piši na {site.email}, kadar želiš spregovoriti.
       </p>
     </header>
 
@@ -29,30 +25,9 @@ const form = t.contact;
   </div>
 
   <div class="wrap grid">
-    <form class="form" action={`mailto:${site.email}`} method="get" enctype="text/plain">
-      <p class="notice">
-        To je <strong>mailto</strong>. Na strežniku se nič ne shrani. Pravi obrazec lahko pride pozneje, brez pretvarjanja zdaj.
-      </p>
-
-      <label>
-        {form.name}
-        <input type="text" name="name" autocomplete="name" required />
-      </label>
-
-      <label>
-        {form.email}
-        <input type="email" name="email" autocomplete="email" required />
-      </label>
-
-      <label>
-        {form.message}
-        <textarea name="body" rows="7" required placeholder={form.placeholder}></textarea>
-      </label>
-
-      <input type="hidden" name="subject" value="Živjo s FitFamBam.com" />
-
-      <button class="btn btn-primary" type="submit">{form.submit.replace("{email}", site.email)}</button>
-    </form>
+    <p class="write">
+      <a class="btn btn-primary" href={`mailto:${site.email}`}>Piši na {site.email}</a>
+    </p>
 
     <aside>
       <h2>Zasebnost</h2>
@@ -61,10 +36,6 @@ const form = t.contact;
       </p>
       <h2>Kje</h2>
       <p>Slovenija. Odgovarjava v slovenščini in angleščini.</p>
-      <p class="alt">
-        Raje prazno okno?
-        <a href={`mailto:${site.email}`}>Piši naravnost</a>.
-      </p>
     </aside>
   </div>
 </Layout>
@@ -99,52 +70,11 @@ const form = t.contact;
     grid-template-columns: 1.2fr 0.8fr;
     gap: clamp(1.5rem, 4vw, 4rem);
     padding-bottom: var(--space-4xl);
+    align-items: start;
   }
 
-  .form {
-    display: grid;
-    gap: var(--space-m);
-    background: var(--color-paper-raised);
-    border: 1px solid var(--color-line);
-    padding: var(--space-xl);
-  }
-
-  .notice {
+  .write {
     margin: 0;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid var(--color-line);
-    color: var(--color-ink);
-    font-size: var(--step-small);
-  }
-
-  label {
-    display: grid;
-    gap: 0.4rem;
-    font-family: var(--font-display);
-    font-size: var(--step-micro);
-    letter-spacing: var(--track-caps);
-    text-transform: uppercase;
-  }
-
-  input,
-  textarea {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--color-ink);
-    background: var(--color-paper);
-    border: 1px solid var(--color-line);
-    border-radius: 0;
-    padding: 0.75rem 0.85rem;
-  }
-
-  input:focus-visible,
-  textarea:focus-visible {
-    outline: 3px solid var(--color-focus);
-    outline-offset: 2px;
-    border-color: var(--color-accent);
   }
 
   aside h2 {
@@ -163,10 +93,6 @@ const form = t.contact;
   aside p {
     color: var(--color-muted);
     margin: 0;
-  }
-
-  .alt {
-    margin-top: var(--space-l);
   }
 
   @media (max-width: 800px) {

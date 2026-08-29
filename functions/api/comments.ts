@@ -12,6 +12,7 @@ import {
   hourAgoIso,
   LIMITS,
 } from "../_lib/util";
+import { notifyPendingComment } from "../_lib/notify";
 
 type PublicComment = {
   id: string;
@@ -142,6 +143,12 @@ export async function onRequestPost(context: PagesContext<Env>): Promise<Respons
     )
       .bind(id, slug, name, text, createdAt, ipHash, link)
       .run();
+
+    try {
+      await notifyPendingComment(context.env, { name, slug, body: text });
+    } catch {
+      // Comment is saved. Mail is best-effort.
+    }
 
     return json({ ok: true }, 201);
   } catch {
