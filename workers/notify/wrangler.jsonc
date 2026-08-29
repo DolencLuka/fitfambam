@@ -1,0 +1,11 @@
+{
+  "name": "fitfambam-notify",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "destination_address": "fitfambam@gmail.com"
+    }
+  ]
+}

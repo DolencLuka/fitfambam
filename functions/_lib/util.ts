@@ -9,10 +9,6 @@ export interface D1Database {
   prepare(query: string): D1PreparedStatement;
 }
 
-export interface SendEmail {
-  send(message: unknown): Promise<void>;
-}
-
 export interface Env {
   DB: D1Database;
   MODERATE_TOKEN: string;
@@ -20,7 +16,7 @@ export interface Env {
   TURNSTILE_SECRET_KEY?: string;
   TURNSTILE_SECRET?: string;
   TURNSTILE_SITE_KEY?: string;
-  EMAIL?: SendEmail;
+  NOTIFY?: { fetch: typeof fetch };
 }
 
 export type PagesContext<E = Env> = {

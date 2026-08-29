@@ -12,10 +12,10 @@
   "vars": {
     "TURNSTILE_SITE_KEY": "0x4AAAAAAEfGfasSA4-rLDC7"
   },
-  "send_email": [
+  "services": [
     {
-      "name": "EMAIL",
-      "destination_address": "fitfambam@gmail.com"
+      "binding": "NOTIFY",
+      "service": "fitfambam-notify"
     }
   ]
 }
